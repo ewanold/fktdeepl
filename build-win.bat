@@ -1,0 +1,2 @@
+pyinstaller --onefile fktdeepl.py
+
