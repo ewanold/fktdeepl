@@ -1,13 +1,11 @@
-import deepl,io
+import deepl, io
 
-inputfile = "testfile1.txt"
-outputfile = "testfile1.html"
+inputfile   = "testfile2.txt"
+outputfile  = "testfile2.html"
+target_lang = "DE"
 
-columns = 2
-target_lang="DE"
-
-even_odd = True  # True/None
-dry_run = True
+even_odd = False  # True/None
+dry_run  = False
 
 #####################################################
 
@@ -46,6 +44,7 @@ table
   margin: 1em;
   border: solid 1px;
   border-collapse: collapse;
+  font-family: ubuntu, sans-serif;
 }
 
 table th,
@@ -71,8 +70,21 @@ def table_footer(out):
 
 #
 #
-def table_row(out, org, trans, cls):
-  out.write("  <tr class='{0}'>\n".format(cls))
+def table_row(out, org, trans):
+  global even_odd
+  
+  if even_odd is None:
+      bg = 'none'
+      
+  else:  
+    if even_odd:
+      bg = 'even'
+    else:
+      bg = 'odd'
+
+    even_odd = not even_odd
+       
+  out.write("  <tr class='{0}'>\n".format(bg))
   out.write("   <td>")
   out.write(org)
   out.write("</td>\n   <td>")
@@ -86,7 +98,7 @@ def table_separator(out, title):
   out.write("   <td>")
   out.write(title)
   out.write("</td>\n   <td>")
-  out.write("EL: ")
+  out.write("EL: <br>SL: ")
   out.write("</td>\n")
   out.write("  </tr>\n")
 
@@ -124,38 +136,68 @@ def translate(item):
 
 #
 #
+def default_title(n):
+  return "перевод {0}".format(n)
+
+#
+#
+def write_items(output, item):
+  print (str(len(item)) + " => ",  end='', flush=True)
+  
+  result = translate(item)
+  
+  if dry_run:
+    print ("(" + str(len(result)) + ")")
+    
+  else:
+    print (len(result))
+  
+  table_row(output, item, result)  
+
+
+#
+#
 def debugpr(s):
   print(str(len(s)) + ' ' + s,  end=">\n", file=debug)
+
+
+###############################################################################
  
 table_header(output)
-table_separator(output, "перевод {0}".format(1));
-title = 2
 
 with open(inputfile,'r',encoding='utf8') as file:
+  titleno = 1
+  items = ""
+   
   for line in file:
     item = cleanup(line)
-    
-    if even_odd is None:
-      bg = 'none'
-      
-    else:  
-      if even_odd:
-        bg = 'even'
-     
-      else:
-        bg = 'odd'
-      even_odd = not even_odd
-       
+
     if len(item) != 0:
-      print (str(len(item)) + " => ",  end='', flush=True)
-      result = translate(item)
 
-      if dry_run:
-        print ("(" + str(len(result)) + ")")
+      if item.startswith('====='):
+        if len(items) > 0: 
+          write_items(output, items)
+        items = ""
+        
+        title = item.lstrip('= ')
+        if len(title) == 0:
+          title = default_title(titleno)
+  
+        table_separator(output, title)
+        titleno += 1
+  
+      elif item.startswith('-----'):
+        if len(items) > 0: 
+          write_items(output, items)
+        items = ""
+          
       else:
-        print (len(result))
+        items += "\n" + item
 
-      table_row(output, item, result, bg)  
+        if titleno == 1:
+          table_separator(output, default_title(titleno))
+          titleno += 1
+          
 
 table_footer(output)
 
