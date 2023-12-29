@@ -27,12 +27,12 @@ def table_footer_fodt(out):
 #
 def table_row_fodt(out, org, trans, even_odd):
   if even_odd is None:
-      bg = 'none'
-      
-  else:  
+    bg = 'none'
+
+  else:
     if even_odd:
       bg = 'even'
-      
+
     else:
       bg = 'odd'
 
@@ -46,5 +46,3 @@ def table_row_fodt(out, org, trans, even_odd):
 #
 def table_separator_fodt(out, title):
   out.write("  <tr>\n")
-
-

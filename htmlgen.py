@@ -9,28 +9,28 @@ def table_header_html(out):
 <head>
 <style>
 
-.none 
+.none
 {
 }
 
-.separator 
+.separator
 {
   font-weight: bold;
   font-size: 130%;
   background-color: #FFFF00;
 }
 
-.even 
+.even
 {
   background-color: #eeeeee;
 }
 
-.odd 
+.odd
 {
   background-color: #ffffff;
 }
 
-table 
+table
 {
   margin: 1em;
   border: solid 1pt;
@@ -40,7 +40,7 @@ table
 
 table tr,
 table th,
-table td 
+table td
 {
   margin: 1em;
   border: solid 1pt;
@@ -73,12 +73,12 @@ def table_footer_html(out):
 #
 def table_row_html(out, org, trans, even_odd):
   if even_odd is None:
-      bg = 'none'
-      
-  else:  
+    bg = 'none'
+
+  else:
     if even_odd:
       bg = 'even'
-      
+
     else:
       bg = 'odd'
 
@@ -104,5 +104,3 @@ def table_separator_html(out, title):
   out.write("EL: <br>SL: ")
   out.write("</td>\n")
   out.write("  </tr>\n")
-
-
