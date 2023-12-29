@@ -1,2 +1,3 @@
 # fktdeepl
-Pre-translate files via deepl for later finetuning in googledocs
+Pre-translate files via deepl for later finetuning in googledocs.
+
