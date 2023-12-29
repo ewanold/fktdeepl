@@ -1,16 +1,19 @@
 import deepl, io, getopt, sys, locale, warnings
 from pathlib import Path
+from htmlgen import *
+from fodtgen import *
 
 ###############################################################################
 
 inputfile      = ""
 outputfile     = ""
 target_lang    = "DE"
+file_type      = "html"
 current_locale = ""
 sum_input      = 0
 sum_output     = 0
-even_odd       = None
 dry_run        = False
+even_odd       = None
 
 warnings.simplefilter("ignore")
 
@@ -36,15 +39,21 @@ def infile_missing():
   elif is_locale("DE"): return u"Eingabedatei fehlt"
   return                       u"Input file missing"
   
+  
+def bad_filetype():
+  if   is_locale("RU"): return u"Неправильный тип файла (html, fodt)"
+  elif is_locale("DE"): return u"Falscher Dateityp (html, fodt)"
+  return                       u"Wrong file type (html, fodt)"
+
  
 ###############################################################################
 # @brief Parses command line arguments and fills the global variables
 # @param argv   Arguments from command line
 #
 def parse_opts(argv):
-  global outputfile, inputfile, dry_run, even_odd, target_lang
+  global outputfile, inputfile, dry_run, even_odd, target_lang, file_type
   
-  opts, args = getopt.getopt(argv,"dchi:o:l:")
+  opts, args = getopt.getopt(argv,"dchi:o:l:t:")
   for opt, arg in opts:
 
     if opt == '-h':
@@ -53,6 +62,9 @@ def parse_opts(argv):
       
     elif opt == "-l":
       target_lang = arg
+      
+    elif opt == "-t":
+      file_type = arg
       
     elif opt == "-i":
       inputfile = arg
@@ -66,82 +78,41 @@ def parse_opts(argv):
     elif opt == "-c":
       even_odd = True
   
+  if file_type != "html" and file_type != "fodt":
+     print(bad_filetype())
+     sys.exit(1)
+  
   if(len(inputfile)) == 0:
      print(infile_missing())
      sys.exit(1)
      
   if(len(outputfile)) == 0:
-    outputfile = str(Path(inputfile).with_suffix(".html"))
+    if file_type == "html":
+      outputfile = str(Path(inputfile).with_suffix(".html"))
+    elif file_type == "fodt":
+      outputfile = str(Path(inputfile).with_suffix(".fodt"))
 
 
 ###############################################################################
-# @brief Writes header for translation table in HTML
+# @brief Writes header for translation table
 # @param out    outputfile
 #
 def table_header(out):
-  out.write("""
-<html>
-<head>
-<style>
-
-.none 
-{
-}
-
-.separator 
-{
-  font-weight: bold;
-  font-size: 130%;
-  background-color: #FFFF00;
-}
-
-.even 
-{
-  background-color: #eeeeee;
-}
-
-.odd 
-{
-  background-color: #ffffff;
-}
-
-table 
-{
-  margin: 1em;
-  border: solid 1pt;
-  border-collapse: collapse;
-  font-family: ubuntu, sans-serif;
-}
-
-table tr,
-table th,
-table td 
-{
-  margin: 1em;
-  border: solid 1pt;
-}
-
-</style>
-</head>
-<body>
-
-<table>
-""")
+  if file_type == "html":   return table_header_html(out)
+  elif file_type == "fodt": return table_header_fodt(out)
 
 
 ###############################################################################
-# @brief Writes footer for translation table in HTML
+# @brief Writes footer for translation table
 # @param out    outputfile
 #
 def table_footer(out):
-  out.write("""</table>
-  </body>
-  </html>
-""")
+  if file_type == "html":   return table_footer_html(out)
+  elif file_type == "fodt": return table_footer_fodt(out)
 
 
 ###############################################################################
-# @brief Writes table row  with columns for origin and translation in HTML
+# @brief Writes table row  with columns for origin and translation
 # @param out     outputfile
 # @param origin  origin in left column
 # @param trans   translation in right column
@@ -149,40 +120,21 @@ def table_footer(out):
 def table_row(out, org, trans):
   global even_odd
   
-  if even_odd is None:
-      bg = 'none'
-      
-  else:  
-    if even_odd:
-      bg = 'even'
-      
-    else:
-      bg = 'odd'
-
+  if even_odd is not None:
     even_odd = not even_odd
-       
-  out.write("  <tr>\n")
-  out.write("   <td class='{0}'>\n".format(bg))
-  out.write(org)
-  out.write("</td>\n   <td class='{0}'>\n".format(bg))
-  out.write(trans)
-  out.write("</td>\n")
-  out.write("  </tr>\n")
+
+  if file_type == "html":   return table_row_html(out, org, trans, even_odd)
+  elif file_type == "fodt": return table_row_fodt(out, org, trans, even_odd)
 
 
 ###############################################################################
-# @brief Writes table separator later input of translators names in HTML
+# @brief Writes table separator later input of translators names
 # @param out     outputfile
 # @param title   title for document navigator
 #
 def table_separator(out, title):
-  out.write("  <tr>\n")
-  out.write("   <td class='separator'>\n")
-  out.write("<h3>" + title + "</h3>")
-  out.write("</td>\n   <td class='separator'>\n")
-  out.write("EL: <br>SL: ")
-  out.write("</td>\n")
-  out.write("  </tr>\n")
+  if file_type == "html":   return table_separator_html(out, title)
+  elif file_type == "fodt": return table_separator_fodt(out, title)
 
 
 ###############################################################################
