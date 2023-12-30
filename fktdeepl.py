@@ -120,18 +120,46 @@ def table_row(out, org, trans):
   if even_odd is not None:
     even_odd = not even_odd
 
-  if file_type == "html":   return table_row_html(out, org, trans, even_odd)
-  elif file_type == "fodt": return table_row_fodt(out, org, trans, even_odd)
+  if file_type == "html": return table_row_html(out, org, trans, even_odd)
+  if file_type == "fodt": return table_row_fodt(out, org, trans, even_odd)
 
 
 ###############################################################################
-# @brief Writes table separator later input of translators names
+# @brief Writes table separator for later input of translators names
 # @param out     outputfile
 # @param title   title for document navigator
 #
-def table_separator(out, title):
-  if file_type == "html":   return table_separator_html(out, title)
-  elif file_type == "fodt": return table_separator_fodt(out, title)
+def table_translators(out, title):
+  if file_type == "html": return table_translators_html(out, title)
+  if file_type == "fodt": return table_translators_fodt(out, title)
+
+
+###############################################################################
+# @brief Writes table separator to describe following content
+# @param out     outputfile
+# @param title   title for document navigator
+#
+def table_heading(out, title):
+  if file_type == "html": return table_heading_html(out, title)
+  if file_type == "fodt": return table_heading_fodt(out, title)
+
+
+###############################################################################
+# @brief Writes an empty paragraph
+# @param out     outputfile
+#
+def text_empty_para(out):
+  if file_type == "html": return text_empty_para_html(out)
+  if file_type == "fodt": return text_empty_para_fodt(out)
+
+
+###############################################################################
+# @brief returns linebreak
+# @return  linebreak sequence
+#
+def text_linebreak():
+  if file_type == "html": return text_linebreak_html()
+  if file_type == "fodt": return text_linebreak_fodt()
 
 
 ###############################################################################
@@ -228,10 +256,13 @@ with io.open(outputfile, 'w', encoding='utf8') as output:
     titleno = 1
     items = ""
 
+    newpara = True
+    
     for line in infile:
       item = cleanup(line)
 
       if len(item) != 0:
+        newpara = True
 
         if item.startswith('====='):
           if len(items) > 0:
@@ -242,8 +273,16 @@ with io.open(outputfile, 'w', encoding='utf8') as output:
           if len(title) == 0:
             title = default_title(titleno)
 
-          table_separator(output, title)
+          table_translators(output, title)
           titleno += 1
+
+        elif item.startswith('#####'):
+          if len(items) > 0:
+            write_items(output, items)
+          items = ""
+
+          title = item.lstrip('# ')
+          table_heading(output, title)
 
         elif item.startswith('-----'):
           if len(items) > 0:
@@ -254,13 +293,18 @@ with io.open(outputfile, 'w', encoding='utf8') as output:
           items += "\n" + item
 
           if titleno == 1:
-            table_separator(output, default_title(titleno))
+            table_translators(output, default_title(titleno))
             titleno += 1
 
+      else:
+          items += text_linebreak()
+
+  if len(items) != 0:
+    write_items(output, items)
 
   table_footer(output)
+
   if dry_run:
     print (str(sum_input) + " => (" + str(sum_output) + ")")
-
   else:
     print (str(sum_input) + " => " + str(sum_output))

@@ -13,11 +13,19 @@ def table_header_html(out):
 {
 }
 
-.separator
+.translators
 {
   font-weight: bold;
   font-size: 130%;
   background-color: #FFFF00;
+}
+
+.heading
+{
+  font-weight: bold;
+  font-size: 130%;
+  background-color: #ddddff;
+  text-align: center;
 }
 
 .even
@@ -92,15 +100,36 @@ def table_row_html(out, org, trans, even_odd):
 
 
 ###############################################################################
-# @brief Writes table separator later input of translators names in HTML
+# @brief Writes table separator for later input of translators names in HTML
 # @param out     outputfile
 # @param title   title for document navigator
 #
-def table_separator_html(out, title):
+def table_translators_html(out, title):
   out.write("  <tr>\n")
-  out.write("   <td class='separator'>\n")
+  out.write("   <td class='translators'>\n")
   out.write("<h3>" + title + "</h3>")
-  out.write("</td>\n   <td class='separator'>\n")
+  out.write("</td>\n   <td class='translators'>\n")
   out.write("EL: <br>SL: ")
   out.write("</td>\n")
   out.write("  </tr>\n")
+
+
+###############################################################################
+# @brief Writes table separator to describe following content in html
+# @param out     outputfile
+# @param title   title for document navigator
+#
+def table_heading_html(out, title):
+  out.write("  <tr>\n")
+  out.write("   <td class='heading' colspan=2>\n")
+  out.write(title)
+  out.write("</td>\n")
+  out.write("  </tr>\n")
+
+
+###############################################################################
+# @brief Writes an empty paragraph in HTML
+# @param out     outputfile
+#
+def text_empty_para_html(out):
+  out.write("  <p/>\n")
