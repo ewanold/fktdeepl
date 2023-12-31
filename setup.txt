@@ -4,3 +4,5 @@ Install standard Python 3.x
 
 pip install --upgrade deepl
 pip install auto-py-to-exe
+pip install easygui
+

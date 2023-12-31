@@ -1,3 +1,4 @@
+cell_counter = 1
 
 ###############################################################################
 # @brief Writes header for translation table in fodt
@@ -14,31 +15,35 @@ def table_header_fodt(out):
  <office:automatic-styles>
   
   <style:style style:name="table_fkt" style:family="table">
-   <style:table-properties style:width="18.547cm" fo:margin-left="-1.296cm" fo:margin-top="0cm" fo:margin-bottom="0cm" fo:break-before="auto" fo:break-after="auto" table:align="left" style:writing-mode="lr-tb"/>
+   <style:table-properties style:width="19cm" fo:margin-left="-1cm" fo:margin-top="0cm" fo:margin-bottom="0cm" fo:break-before="auto" fo:break-after="auto" table:align="left" style:writing-mode="lr-tb"/>
+  </style:style>
+  
+  <style:style style:name="table_counter_column" style:family="table-column">
+   <style:table-column-properties style:column-width="1cm"/>
   </style:style>
   
   <style:style style:name="table_left_column" style:family="table-column">
-   <style:table-column-properties style:column-width="9.234cm"/>
+   <style:table-column-properties style:column-width="9,5cm"/>
   </style:style>
   
   <style:style style:name="table_right_column" style:family="table-column">
-   <style:table-column-properties style:column-width="9.313cm"/>
+   <style:table-column-properties style:column-width="9,5cm"/>
   </style:style>
   
   <style:style style:name="translators_row" style:family="table-row">
    <style:table-row-properties fo:keep-together="auto"/>
   </style:style>
   
+  <style:style style:name="translators_counter_cell" style:family="table-cell">
+   <style:table-cell-properties style:vertical-align="" fo:background-color="#e6b8af" fo:padding="0.176cm" fo:border="1pt solid #000000" />
+  </style:style>
+  
   <style:style style:name="translators_left_cell" style:family="table-cell">
-   <style:table-cell-properties style:vertical-align="" fo:background-color="#e6b8af" fo:padding="0.176cm" fo:border="1pt solid #000000">
-    <style:background-image/>
-   </style:table-cell-properties>
+   <style:table-cell-properties style:vertical-align="" fo:background-color="#e6b8af" fo:padding="0.176cm" fo:border="1pt solid #000000" />
   </style:style>
   
   <style:style style:name="translators_right_cell" style:family="table-cell">
-   <style:table-cell-properties style:vertical-align="" fo:background-color="#e6b8af" fo:padding="0.176cm" fo:border="1pt solid #000000">
-    <style:background-image/>
-   </style:table-cell-properties>
+   <style:table-cell-properties style:vertical-align="" fo:background-color="#e6b8af" fo:padding="0.176cm" fo:border="1pt solid #000000" />
   </style:style>
   
   <style:style style:name="heading_row" style:family="table-row">
@@ -57,8 +62,17 @@ def table_header_fodt(out):
    <style:table-cell-properties style:vertical-align="" fo:padding="0.176cm" fo:border="1pt solid #000000"/>
   </style:style>
   
+  <style:style style:name="translation_counter_cell" style:family="table-cell">
+   <style:table-cell-properties style:vertical-align="" fo:padding="0.176cm" fo:border="1pt solid #000000"/>
+  </style:style>
+  
   <style:style style:name="translation_right_cell" style:family="table-cell">
    <style:table-cell-properties style:vertical-align="" fo:padding="0.176cm" fo:border="1pt solid #000000"/>
+  </style:style>
+  
+  <style:style style:name="translation_counter_text" style:family="paragraph" style:parent-style-name="Standard">
+   <style:paragraph-properties fo:margin-top="0cm" fo:margin-bottom="0cm" style:contextual-spacing="false" fo:line-height="115%" fo:text-align="justify" style:justify-single-word="false"/>
+   <style:text-properties officeooo:paragraph-rsid="00128241"/>
   </style:style>
   
   <style:style style:name="translation_left_text" style:family="paragraph" style:parent-style-name="Standard">
@@ -103,7 +117,7 @@ def table_header_fodt(out):
   </style:style>
 
   <style:page-layout style:name="page_layout">
-   <style:page-layout-properties fo:page-width="21.001cm" fo:page-height="29.7cm" style:num-format="1" style:print-orientation="portrait" fo:margin-top="2cm" fo:margin-bottom="2cm" fo:margin-left="2cm" fo:margin-right="2cm" style:writing-mode="lr-tb" style:layout-grid-color="#c0c0c0" style:layout-grid-lines="20" style:layout-grid-base-height="0.706cm" style:layout-grid-ruby-height="0.353cm" style:layout-grid-mode="none" style:layout-grid-ruby-below="false" style:layout-grid-print="false" style:layout-grid-display="false" style:footnote-max-height="0cm" loext:margin-gutter="0cm">
+   <style:page-layout-properties fo:page-width="21cm" fo:page-height="29.7cm" style:num-format="1" style:print-orientation="portrait" fo:margin-top="2cm" fo:margin-bottom="2cm" fo:margin-left="2cm" fo:margin-right="2cm" style:writing-mode="lr-tb" style:layout-grid-color="#c0c0c0" style:layout-grid-lines="20" style:layout-grid-base-height="0.706cm" style:layout-grid-ruby-height="0.353cm" style:layout-grid-mode="none" style:layout-grid-ruby-below="false" style:layout-grid-print="false" style:layout-grid-display="false" style:footnote-max-height="0cm" loext:margin-gutter="0cm">
     <style:footnote-sep style:width="0.018cm" style:distance-before-sep="0.101cm" style:distance-after-sep="0.101cm" style:line-style="solid" style:adjustment="left" style:rel-width="25%" style:color="#000000"/>
    </style:page-layout-properties>
   </style:page-layout>
@@ -117,6 +131,7 @@ def table_header_fodt(out):
    
    <table:table table:name="table_fkt" table:style-name="table_fkt">
    
+    <table:table-column table:style-name="table_counter_column"/>
     <table:table-column table:style-name="table_left_column"/>
     <table:table-column table:style-name="table_right_column"/>
 """)
@@ -142,6 +157,8 @@ def table_footer_fodt(out):
 # @param trans   translation in right column
 #
 def table_row_fodt(out, org, trans, even_odd):
+  global cell_counter
+ 
   if even_odd is None:
     bg = 'none'
 
@@ -154,15 +171,23 @@ def table_row_fodt(out, org, trans, even_odd):
 
   out.write("""
     <table:table-row table:style-name="translation_row">
+    
+     <table:table-cell table:style-name="translation_counter_cell" office:value-type="string">
+      <text:p text:style-name="translation_counter_text">{0}</text:p>
+     </table:table-cell>
+     
      <table:table-cell table:style-name="translation_left_cell" office:value-type="string">
-      <text:p text:style-name="translation_left_text">{0}</text:p>
+      <text:p text:style-name="translation_left_text">{1}</text:p>
      </table:table-cell>
+     
      <table:table-cell table:style-name="translation_right_cell" office:value-type="string">
-      <text:p text:style-name="translation_right_text">{1}</text:p>
+      <text:p text:style-name="translation_right_text">{2}</text:p>
      </table:table-cell>
+     
     </table:table-row>
-  """.format(org, trans))
+  """.format(cell_counter, org, trans))
 
+  cell_counter += 1
 
 ###############################################################################
 # @brief Writes table separator for later input of translators names in fodt
@@ -172,12 +197,12 @@ def table_row_fodt(out, org, trans, even_odd):
 def table_translators_fodt(out, title):
   out.write("""
     <table:table-row table:style-name="translators_row">
-     <table:table-cell table:style-name="translators_left_cell" office:value-type="string">
+     <table:table-cell table:style-name="translators_left_cell" table:number-columns-spanned="2" office:value-type="string">
       <text:h text:style-name="heading_translators" text:outline-level="1">{0}</text:h>
      </table:table-cell>
      <table:table-cell table:style-name="translators_right_cell" office:value-type="string">
       <text:p text:style-name="translators_right_text">EK:</text:p>
-      <text:p text:style-name="translators_right_text">SK</text:p>
+      <text:p text:style-name="translators_right_text">SK:</text:p>
      </table:table-cell>
     </table:table-row>
   """.format(title))
@@ -192,7 +217,7 @@ def table_translators_fodt(out, title):
 def table_heading_fodt(out, title):
   out.write("""
     <table:table-row table:style-name="heading_row">
-     <table:table-cell table:style-name="heading_cell" table:number-columns-spanned="2" office:value-type="string">
+     <table:table-cell table:style-name="heading_cell" table:number-columns-spanned="3" office:value-type="string">
       <text:p text:style-name="heading_text">{0}</text:p>
      </table:table-cell>
      <table:covered-table-cell/>

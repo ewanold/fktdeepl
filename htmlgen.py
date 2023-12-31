@@ -133,3 +133,11 @@ def table_heading_html(out, title):
 #
 def text_empty_para_html(out):
   out.write("  <p/>\n")
+
+
+###############################################################################
+# @brief returns linebreak in HTML
+# @return  linebreak sequence
+#
+def text_linebreak_html():
+  return "\n<br/><br/>\n"

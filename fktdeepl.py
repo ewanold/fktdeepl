@@ -1,15 +1,17 @@
-from pathlib import Path
-from htmlgen import *
-from fodtgen import *
-import deepl, io, getopt, sys, locale, warnings
+from pathlib  import Path
+from htmlgen  import *
+from fodtgen  import *
+from fkti18n import *
+
+import deepl, io, getopt, sys, warnings
+import easygui
 
 ###############################################################################
 
 inputfile      = ""
 outputfile     = ""
 target_lang    = "DE"
-file_type      = "html"
-current_locale = ""
+file_type      = "fodt"
 sum_input      = 0
 sum_output     = 0
 dry_run        = False
@@ -17,34 +19,39 @@ even_odd       = None
 
 warnings.simplefilter("ignore")
 
-USAGE = "fktdeepl -i <inputfile> [-o <outputfile>] [-l <lang>][-d] [-c]"
-
-#current_locale, cp = locale.getlocale(locale.LC_CTYPE)
-current_locale, cp = locale.getdefaultlocale()
-print("Locale: " + current_locale)
+USAGE   = "fktdeepl -i <input> [-o <output>] [-l <lang>] [-t <type>] [-d] [-c]"
+VERSION = "0.3"
 
 #####################################################
-# i18n section modeled with functions instead of gettext & Co.
+# @brief Shows grafical dialogs to enter needed data
 #
+def guiinput():
+  global inputfile , outputfile
+  
+  inputfile = easygui.fileopenbox(msg=enter_inputfile(),
+                                  title="fktdeepl",
+                                  default='*',
+                                  filetypes=[ ["*.txt", "TXT files"  ], ["*.*", "All files"] ],
+                                  multiple=False)
 
-def is_locale(s):
-  return current_locale.find(s) >= 0
+  if inputfile == None:
+    sys.exit(0)
+    
+  if(len(inputfile)) == 0:
+    print(infile_missing())
+    sys.exit(1)
 
+# more options to input
 
-def infile_missing():
-  if is_locale("RU"): return "Входной файл отсутствует"
-  if is_locale("DE"): return "Eingabedatei fehlt"
-  return                     "Input file missing"
+  if(len(outputfile)) == 0:
+    if file_type == "html":
+      outputfile = str(Path(inputfile).with_suffix(".html"))
+    elif file_type == "fodt":
+      outputfile = str(Path(inputfile).with_suffix(".fodt"))
 
-
-def bad_filetype():
-  if is_locale("RU"): return "Неправильный тип файла (html, fodt)"
-  if is_locale("DE"): return "Falscher Dateityp (html, fodt)"
-  return                     "Wrong file type (html, fodt)"
-
-
+  
 ###############################################################################
-# @brief Parses command line arguments and fills the global variables
+# @brief Parses command line arguments and Shows grafical dialogs to enter needed data
 # @param argv   Arguments from command line
 #
 def parse_opts(argv):
@@ -240,7 +247,10 @@ def write_items(output, item):
 ###############################################################################
 # Main part
 
-parse_opts(sys.argv[1:])
+if len(sys.argv) > 1:
+  parse_opts(sys.argv[1:])
+else:  
+  guiinput()
 
 with io.open(outputfile, 'w', encoding='utf8') as output:
   #debug  = io.open("debugfile.txt", 'w', encoding='utf8')
