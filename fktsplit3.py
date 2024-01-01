@@ -16,7 +16,7 @@ class Column(Enum):
 
 USAGE = "fktsplit3 input left-tag center-tag right-tag"
 
-if len(sys.argv) < 6
+if len(sys.argv) < 6:
   print(USAGE)
   sys.exit(1)
 
@@ -27,9 +27,9 @@ tagright  = sys.argv[4]
 tagend    = sys.argv[5]
 
 inpath     = Path(inputfile)
-leftfile   = str(inpath.parent) + inpath.stem + "-left"   + inpath.suffix
-centerfile = str(inpath.parent) + inpath.stem + "-center" + inpath.suffix
-rightfile  = str(inpath.parent) + inpath.stem + "-right"  + inpath.suffix
+leftfile   = str(inpath.parent) + "\\" + inpath.stem + "-left"   + inpath.suffix
+centerfile = str(inpath.parent) + "\\" + inpath.stem + "-center" + inpath.suffix
+rightfile  = str(inpath.parent) + "\\" + inpath.stem + "-right"  + inpath.suffix
 
 column    = Column.NONE
 lineno    = 0
@@ -38,6 +38,7 @@ sumcenter = 0
 sumright  = 0
 
 print(inputfile + " => " + leftfile + " + " + centerfile + " + " + rightfile)
+print(inputfile + " => " + tagleft + " + " + tagcenter + " + " + tagright + " + " + tagend)
 
 with open(inputfile, 'r', encoding='utf8') as infile:
   with open(leftfile, 'w', encoding='utf8') as outleft:
@@ -50,9 +51,9 @@ with open(inputfile, 'r', encoding='utf8') as infile:
 
           ## Check statemachine
 
-         skip = False
+          skip = False
 
-         if item == tagleft:
+          if item == tagleft:
             if column != Column.NONE and column != Column.END:
               print(bad_state_for_left(lineno))
               sys.exit(1)
@@ -61,7 +62,7 @@ with open(inputfile, 'r', encoding='utf8') as infile:
             sumleft += 1
             skip = True
 
-          if item == tagcenter:
+          elif item == tagcenter:
             if column != Column.LEFT:
               print(bad_state_for_center(lineno))
               sys.exit(1)
@@ -70,18 +71,18 @@ with open(inputfile, 'r', encoding='utf8') as infile:
             sumcenter += 1
             skip = True
 
-          elif item= = tagright:
+          elif item == tagright:
             if column != Column.CENTER:
               print(bad_state_for_right(lineno))
               sys.exit(1)
 
             column = Column.RIGHT
-            skip = True
             sumright += 1
+            skip = True
 
-          elif item= = tagend:
+          elif item == tagend:
             if column != Column.RIGHT:
-              print(bad_state_for_right(lineno))
+              print(bad_state_for_end(lineno))
               sys.exit(1)
 
             column = Column.END
@@ -90,7 +91,7 @@ with open(inputfile, 'r', encoding='utf8') as infile:
           ## Write line to correct file
 
           if not skip:
-            if column == Column.END:S
+            if column == Column.END:
               outleft.write("\n-----\n")
               outcenter.write("\n-----\n")
               outright.write("\n-----\n")
