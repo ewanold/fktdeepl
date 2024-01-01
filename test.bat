@@ -4,3 +4,7 @@ rem curl -X POST https://api-free.deepl.com/v2/translate  -H "Authorization: Dee
 rem run compile python app
 fktdeepl -i testfile2.txt -c -l DE    -o testfile2-de.html
 fktdeepl -i testfile2.txt -c -l EN-GB -o testfile2-en.html
+
+fktsplit3  testfile3-export.txt   ####links####  ####mitte####  ####rechts####  ####ende####
+
+fktsplit2  testfile2-export.txt   ####links####  ####rechts####  ####ende####

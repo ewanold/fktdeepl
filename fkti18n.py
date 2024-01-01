@@ -33,27 +33,33 @@ def bad_filetype():
   return                     "Wrong file type (html, fodt)"
 
 
-def bad_state_for_left(ln)
+def bad_state_for_left(ln):
   if is_locale("RU"): return "Неверный статус для слева в линии {0}".format(ln)
   if is_locale("DE"): return "Falscher Zustand für Links in Zeile {0}".format(ln)
   return                     "Wrong state für left in line".format(ln)
 
 
-def bad_state_for_center(ln)
+def bad_state_for_center(ln):
   if is_locale("RU"): return "Неверный статус для центра в линии {0}".format(ln)
   if is_locale("DE"): return "Falscher Zustand für Mitte in Zeile {0}".format(ln)
   return                     "Wrong state für middle in line".format(ln)
 
 
-def bad_state_for_right(ln)
+def bad_state_for_right(ln):
   if is_locale("RU"): return "Неверный статус для справа в линии {0}".format(ln)
   if is_locale("DE"): return "Falscher Zustand für Rechts in Zeile {0}".format(ln)
   return                     "Wrong state für right in line".format(ln)
 
 
-def bad_state_for_end(ln)
+def bad_state_for_end(ln):
   if is_locale("RU"): return "Неверный статус для  в линии {0}".format(ln)
   if is_locale("DE"): return "Falscher Zustand für Ende in Zeile {0}".format(ln)
   return                     "Wrong state für end in line".format(ln)
+
+
+def bad_column_sum():
+  if is_locale("RU"): return "Неравное количество ячеек в столбцах"
+  if is_locale("DE"): return "Ungleiche Anzahl Zellen in den Spalten"
+  return                     "Differing numbers of cells in columns"
 
 

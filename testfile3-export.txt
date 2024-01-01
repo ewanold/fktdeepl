@@ -1,73 +1,94 @@
 ﻿Тitel
 
 
+
 Част 1
 
 EK:
 SK:
 
+
+
 1
 ####links####
 Здравствуйте, уважаемые товарищи. Сегодня мы продолжаем наши встречи или, [можно] назвать, курс лекций. После прослушанной вводной лекции по «Концепции общественной безопасности», сегодня у нас первая тема - тема самая важная, на которой всё зиждется, это фундамент «Концепции общественной безопасности». Тема называется «Триединство - Материя, Информация, Мера».
-####rechts####
+####mitte###
 Hallo, verehrte Genossinnen und Genossen. Heute setzen wir unsere Treffen oder, [oder, wie man es nennen kann, einen Kurs von Vorträgen. Nachdem wir den Einführungsvortrag über das "Konzept des Wir haben heute das erste Thema, das wichtigste Thema, auf dem alles ruht, die Grundlage des Konzepts der öffentlichen Sicherheit. das die Grundlage des Konzepts der öffentlichen Sicherheit ist. Das Thema heißt "Die Dreifaltigkeit von Materie, Information und Maß".
+####rechts###
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est
 ####ende####
 2
 ####links####
 Человек воспринимает окружающий мiр органами своих чувств. На плакате вы видите восприятие человеком окружающего мiра. Если представить всю Вселенную - во селенной все процессы носят колебательный характер: звук – колебание, свет -
-####rechts####
+####mitte###
 Der Mensch nimmt die Welt um ihn herum mit seinen Sinnen wahr. Auf diesem Poster können Sie sehen wie der Mensch die Welt um ihn herum wahrnimmt. Wenn Sie sich das Universum als Ganzes vorstellen. im Universum sind alle Prozesse oszillierend: Schall ist Oszillation, Licht ist Oszillation.
-####ende####
-####links####
-####rechts####
-
+####rechts###
+ Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore 
 ####ende####
 3
 ####links####
 колебание, электрон - колеблется, вращается вокруг ядра атома; ядро - в молекуле, Земля - вокруг Солнца, вокруг Земли Луна вращается; Солнце в Галактике как-то перемещается, то есть - все процессы колебательные - радиоволны - это колебание, электромагнитные волны - колебание.
-####rechts####
+####mitte###
 Oszillation, Elektron - schwingt, dreht sich um den Kern eines Atoms; Kern - in einem Molekül, die Erde - um die Sonne, um die Erde dreht sich der Mond; die Sonne in der Galaxie irgendwie bewegt sich, also sind alle Prozesse oszillierend, Radiowellen sind oszillierend, elektromagnetische Wellen sind Schwingungen.
+####rechts###
+ Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat
 ####ende####
+
 ####links####
 перевод 2
-####rechts####
+####mitte###
 EK:
 SK:
+####rechts###
+
 ####ende####
 4
 ####links####
 И все эти колебания человек воспринимает своими органами чувств. У нас принято в учебниках: зрение - это видимый спектр частот; слух - звуковой спектр частот; обоняние - это восприятие на молекулярном уровне, осязание, вкус. И эти органы чувств признаны. Не признанным легитимной наукой (хотя сейчас уже тоже есть понимание) [является] биополе человека. То есть, человек излучает колебания (и об этом у нас пойдет речь дальше) и воспринимает тоже колебания.
-####rechts####
+####mitte###
 Und all diese Schwingungen werden vom Menschen mit seinen Sinnen wahrgenommen. mit seinen Sinnen wahrgenommen. In unseren Lehrbüchern steht: Sehen ist das sichtbare Spektrum der Frequenzen; Hören ist das Tonspektrum der Frequenzen; Riechen ist die Wahrnehmung auf der molekularen Ebene, Tasten, Berühren. Das Sehen ist das sichtbare Spektrum der Frequenzen; das Hören ist das Klangspektrum der Frequenzen; der Geruch ist die Wahrnehmung auf molekularer Ebene, der Tastsinn, Geschmack. Und diese Sinne sind anerkannt. Nicht von der seriösen Wissenschaft anerkannt (obwohl es jetzt gibt es auch ein Verständnis) [ist] das menschliche Biofeld. Das heißt, ein Mensch sendet Schwingungen aus (und wir werden weiter unten darüber sprechen) und nimmt auch Schwingungen wahr.
+####rechts###
+ Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
 ####ende####
 5
 ####links####
 Примером такого восприятия является [солнечная активность]: на Солнце [произошла] вспышка (об этом все знают), а у человека - бах, сердечно-сосудистая система сжалась. Вы знаете, [ что есть] благоприятные, неблагоприятные дни - все делают прогнозы. Что это такое? Колебательные процессы на Солнце сказываются на человеке - он воспринимает эти колебательные процессы.
-####rechts####
+####mitte###
 Ein Beispiel für eine solche Wahrnehmung ist [die Sonnenaktivität]: Es [gab] einen Ausbruch auf der Sonne (jeder weiß davon), und das Herz-Kreislauf-System eines Menschen schrumpfte. Jeder weiß davon, und der Mensch, peng, das Herz-Kreislauf-System schrumpft. Sie wissen, [ dass es] günstige und ungünstige Tage gibt - jeder macht Vorhersagen. Woran liegt das? Die schwankenden Prozesse auf der Sonne wirken sich auf den Menschen aus - er spürt diese Schwankungen.
+####rechts###
+ Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
 ####ende####
 6
 ####links####
 Примером такого восприятия является [солнечная активность]: на Солнце [произошла] вспышка (об этом все знают), а у человека - бах, сердечно-сосудистая система сжалась. Вы знаете, [ что есть] благоприятные, неблагоприятные дни - все делают прогнозы. Что это такое? Колебательные процессы на Солнце сказываются на человеке - он воспринимает эти колебательные процессы.
-####rechts####
+####mitte###
 Ein Beispiel für eine solche Wahrnehmung ist [die Sonnenaktivität]: Es [gab] einen Ausbruch auf der Sonne (jeder weiß davon), und das Herz-Kreislauf-System eines Menschen schrumpfte. Jeder weiß davon, und der Mensch, peng, das Herz-Kreislauf-System schrumpft. Sie wissen, [ dass es] günstige und ungünstige Tage gibt - jeder macht Vorhersagen. Woran liegt das? Die schwankenden Prozesse auf der Sonne wirken sich auf den Menschen aus - er spürt diese Schwankungen.
+####rechts###
+ Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
 ####ende####
+
 ####links####
 Част 3
-####rechts####
+####mitte###
 EK:
 SK:
+####rechts###
+
 ####ende####
 7
 ####links####
 И все эти колебания человек воспринимает своими органами чувств. У нас принято в учебниках: зрение - это видимый спектр частот; слух - звуковой спектр частот; обоняние - это восприятие на молекулярном уровне, осязание, вкус. И эти органы чувств признаны. Не признанным легитимной наукой (хотя сейчас уже тоже есть понимание) [является] биополе человека. То есть, человек излучает колебания (и об этом у нас пойдет речь дальше) и воспринимает тоже колебания.
-####rechts####
+####mitte###
 Und all diese Schwingungen werden vom Menschen mit seinen Sinnen wahrgenommen. mit seinen Sinnen wahrgenommen. In unseren Lehrbüchern steht: Sehen ist das sichtbare Spektrum der Frequenzen; Hören ist das Tonspektrum der Frequenzen; Riechen ist die Wahrnehmung auf der molekularen Ebene, Tasten, Berühren. Das Sehen ist das sichtbare Spektrum der Frequenzen; das Hören ist das Klangspektrum der Frequenzen; der Geruch ist die Wahrnehmung auf molekularer Ebene, der Tastsinn, Geschmack. Und diese Sinne sind anerkannt. Nicht von der seriösen Wissenschaft anerkannt (obwohl es jetzt gibt es auch ein Verständnis) [ist] das menschliche Biofeld. Das heißt, ein Mensch sendet Schwingungen aus (und wir werden weiter unten darüber sprechen) und nimmt auch Schwingungen wahr.
+####rechts###
+ Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
 ####ende####
 8
 ####links####
 Примером такого восприятия является [солнечная активность]: на Солнце [произошла] вспышка (об этом все знают), а у человека - бах, сердечно-сосудистая система сжалась. Вы знаете, [ что есть] благоприятные, неблагоприятные дни - все делают прогнозы. Что это такое? Колебательные процессы на Солнце сказываются на человеке - он воспринимает эти колебательные процессы.
-####rechts####
+####mitte###
 Ein Beispiel für eine solche Wahrnehmung ist [die Sonnenaktivität]: Es [gab] einen Ausbruch auf der Sonne (jeder weiß davon), und das Herz-Kreislauf-System eines Menschen schrumpfte. Jeder weiß davon, und der Mensch, peng, das Herz-Kreislauf-System schrumpft. Sie wissen, [ dass es] günstige und ungünstige Tage gibt - jeder macht Vorhersagen. Woran liegt das? Die schwankenden Prozesse auf der Sonne wirken sich auf den Menschen aus - er spürt diese Schwankungen.
+####rechts###
+ Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
 ####ende####
 
