@@ -260,8 +260,6 @@ with io.open(outputfile, 'w', encoding='utf8') as output:
   print(inputfile + " => " + outputfile)
   table_header(output)
 
-
-
   with open(inputfile, 'r', encoding='utf8') as infile:
     titleno = 1
     items = ""
