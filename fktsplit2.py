@@ -1,4 +1,4 @@
-from pathlib  import Path
+﻿from pathlib  import Path
 from fkti18n import *
 
 import io, getopt, sys, warnings

@@ -1,4 +1,4 @@
-
+﻿
 ###############################################################################
 # @brief Writes header for translation table in HTML
 # @param out    outputfile

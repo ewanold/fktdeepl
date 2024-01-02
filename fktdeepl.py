@@ -1,4 +1,4 @@
-from pathlib  import Path
+﻿from pathlib  import Path
 from htmlgen  import *
 from fodtgen  import *
 from fkti18n import *

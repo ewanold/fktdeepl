@@ -1,4 +1,4 @@
-import locale
+﻿import locale
 
 current_locale = ""
 
