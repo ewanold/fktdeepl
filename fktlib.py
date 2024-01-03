@@ -1,4 +1,4 @@
-import io
+import io, sys
 
 def logger(s):
   print(s)

@@ -25,8 +25,8 @@ tagright  = sys.argv[3]
 tagend    = sys.argv[4]
 
 inpath    = Path(inputfile) / ""
-leftfile  = str(inpath.parent) + "\\" + inpath.stem + "-left"  + inpath.suffix
-rightfile = str(inpath.parent) + "\\" + inpath.stem + "-right" + inpath.suffix
+leftfile  = str(Path(inputfile).with_name(inpath.stem + "-left"  + inpath.suffix))
+rightfile = str(Path(inputfile).with_name(inpath.stem + "-right" + inpath.suffix))
 
 column   = Column.NONE
 lineno   = 0
