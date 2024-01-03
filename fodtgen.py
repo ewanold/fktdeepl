@@ -81,11 +81,11 @@ def table_header_fodt(out):
    <style:table-row-properties fo:keep-together="auto"/>
   </style:style>
   
-  <style:style style:name="translation_left_cell" style:family="table-cell">
+  <style:style style:name="translation_counter_cell" style:family="table-cell">
    <style:table-cell-properties style:vertical-align="" fo:padding="0.176cm" fo:border='""" + frame_style + """'/>
   </style:style>
   
-  <style:style style:name="translation_counter_cell" style:family="table-cell">
+  <style:style style:name="translation_left_cell" style:family="table-cell">
    <style:table-cell-properties style:vertical-align="" fo:padding="0.176cm" fo:border='""" + frame_style + """'/>
   </style:style>
   
@@ -93,29 +93,54 @@ def table_header_fodt(out):
    <style:table-cell-properties style:vertical-align="" fo:padding="0.176cm" fo:border='""" + frame_style + """'/>
   </style:style>
   
+  <style:style style:name="translation_3rd_cell" style:family="table-cell">
+   <style:table-cell-properties style:vertical-align="" fo:padding="0.176cm" fo:border='""" + frame_style + """'/>
+  </style:style>
+  
   <style:style style:name="translation_counter_text" style:family="paragraph" style:parent-style-name="Standard">
-   <style:paragraph-properties fo:margin-top="0cm" fo:margin-bottom="0cm" style:contextual-spacing="false" fo:line-height="115%" fo:text-align="justify" style:justify-single-word="false"/>
+   <style:paragraph-properties fo:margin-top="0cm" fo:margin-bottom="0cm" style:contextual-spacing="false" 
+                               fo:line-height="115%" fo:text-align="justify" style:justify-single-word="false"/>
    <style:text-properties officeooo:paragraph-rsid="00128241"/>
   </style:style>
   
   <style:style style:name="translation_left_text" style:family="paragraph" style:parent-style-name="Standard">
-   <style:paragraph-properties fo:margin-top="0cm" fo:margin-bottom="0cm" style:contextual-spacing="false" fo:line-height="115%" fo:text-align="justify" style:justify-single-word="false"/>
+   <style:paragraph-properties fo:margin-top="0cm" fo:margin-bottom="0cm" style:contextual-spacing="false" 
+                               fo:line-height="115%" fo:text-align="justify" style:justify-single-word="false"/>
    <style:text-properties officeooo:paragraph-rsid="00128241"/>
   </style:style>
   
   <style:style style:name="translation_right_text" style:family="paragraph" style:parent-style-name="Standard">
-   <style:paragraph-properties fo:margin-left="0cm" fo:margin-right="0cm" fo:margin-top="0cm" fo:margin-bottom="0cm" style:contextual-spacing="false" fo:line-height="100%" fo:text-align="justify" style:justify-single-word="false" fo:keep-together="auto" fo:orphans="0" fo:widows="0" fo:text-indent="0cm" style:auto-text-indent="false" fo:padding="0cm" fo:border="none" fo:keep-with-next="auto"/>
+   <style:paragraph-properties fo:margin-left="0cm" fo:margin-right="0cm" fo:margin-top="0cm" fo:margin-bottom="0cm" 
+                               style:contextual-spacing="false" fo:line-height="100%" fo:text-align="justify" 
+                               style:justify-single-word="false" fo:keep-together="auto" fo:orphans="0" 
+                               fo:widows="0" fo:text-indent="0cm" style:auto-text-indent="false" fo:padding="0cm" 
+                               fo:border="none" fo:keep-with-next="auto"/>
+   <style:text-properties officeooo:paragraph-rsid="00128241"/>
+  </style:style>
+  
+  <style:style style:name="translation_3rd_text" style:family="paragraph" style:parent-style-name="Standard">
+   <style:paragraph-properties fo:margin-left="0cm" fo:margin-right="0cm" fo:margin-top="0cm" fo:margin-bottom="0cm" 
+                               style:contextual-spacing="false" fo:line-height="100%" fo:text-align="justify" 
+                               style:justify-single-word="false" fo:keep-together="auto" fo:orphans="0" 
+                               fo:widows="0" fo:text-indent="0cm" style:auto-text-indent="false" fo:padding="0cm" 
+                               fo:border="none" fo:keep-with-next="auto"/>
    <style:text-properties officeooo:paragraph-rsid="00128241"/>
   </style:style>
   
   <style:style style:name="text_regular" style:family="paragraph" style:parent-style-name="Standard">
    <loext:graphic-properties draw:fill="none"/>
-   <style:paragraph-properties fo:margin-left="0cm" fo:margin-right="0cm" fo:line-height="115%" fo:text-align="justify" style:justify-single-word="false" fo:text-indent="-1.3cm" style:auto-text-indent="false" fo:background-color="transparent"/>
+   <style:paragraph-properties fo:margin-left="0cm" fo:margin-right="0cm" fo:line-height="115%" fo:text-align="justify" 
+                               style:justify-single-word="false" fo:text-indent="-1.3cm" style:auto-text-indent="false" 
+                               fo:background-color="transparent"/>
    <style:text-properties officeooo:paragraph-rsid="00128241"/>
   </style:style>
 
   <style:style style:name="translators_right_text" style:family="paragraph" style:parent-style-name="Standard">
-   <style:paragraph-properties fo:margin-left="0cm" fo:margin-right="0cm" fo:margin-top="0cm" fo:margin-bottom="0cm" style:contextual-spacing="false" fo:line-height="100%" fo:text-align="start" style:justify-single-word="false" fo:keep-together="auto" fo:orphans="0" fo:widows="0" fo:text-indent="0cm" style:auto-text-indent="false" fo:padding="0cm" fo:border="none" fo:keep-with-next="auto"/>
+   <style:paragraph-properties fo:margin-left="0cm" fo:margin-right="0cm" fo:margin-top="0cm" fo:margin-bottom="0cm" 
+                               style:contextual-spacing="false" fo:line-height="100%" fo:text-align="start" 
+                               style:justify-single-word="false" fo:keep-together="auto" fo:orphans="0" fo:widows="0" 
+                               fo:text-indent="0cm" style:auto-text-indent="false" fo:padding="0cm" fo:border="none" 
+                               fo:keep-with-next="auto"/>
    <style:text-properties fo:font-weight="bold" officeooo:paragraph-rsid="00128241" style:font-weight-asian="bold"/>
   </style:style>
   
@@ -175,22 +200,23 @@ def table_footer_fodt(out):
 
 ###############################################################################
 # @brief Writes table row  with columns for origin and translation in fodt
-# @param out     outputfile
-# @param origin  origin in left column
-# @param trans   translation in right column
+# @param out       outputfile
+# @param origin    origin in left column
+# @param col3text  optional text for third column
+# @param trans     translation in right column
 #
-def table_row_fodt(out, org, trans, even_odd):
+def table_row_fodt(out, org, trans, col3text, even_odd):
   global cell_counter
  
   if even_odd is None:
-    bg = 'none'
+    bg = ''
 
   else:
     if even_odd:
-      bg = 'even'
+      bg = ''
 
     else:
-      bg = 'odd'
+      bg = '-odd'
 
   out.write("""
     <table:table-row table:style-name="translation_row">
@@ -200,15 +226,24 @@ def table_row_fodt(out, org, trans, even_odd):
      </table:table-cell>
      
      <table:table-cell table:style-name="translation_left_cell" office:value-type="string">
-      <text:p text:style-name="translation_left_text">{1}</text:p>
+      <text:p text:style-name="translation_left_text{1}">{2}</text:p>
      </table:table-cell>
      
      <table:table-cell table:style-name="translation_right_cell" office:value-type="string">
-      <text:p text:style-name="translation_right_text">{2}</text:p>
+      <text:p text:style-name="translation_right_text{2}">{3}</text:p>
      </table:table-cell>
+""".format(cell_counter, bg, org, bg, trans))
+
+  if col3text != None:
+    out.write("""
+     <table:table-cell table:style-name="translation_3rd_cell" office:value-type="string">
+      <text:p text:style-name="translation_3rd_text{0}">{1}</text:p>
+     </table:table-cell>
+""".format(bg, col3text))
      
+  out.write("""
     </table:table-row>
-  """.format(cell_counter, org, trans))
+  """)
 
   cell_counter += 1
 

@@ -11,6 +11,11 @@ import easygui
 
 inputfile      = ""
 outputfile     = ""
+input2file     = ""
+input3file     = ""
+in2file        = None
+in3file        = None
+columns        = 2
 target_lang    = "DE"
 file_type      = "fodt"
 sum_input      = 0
@@ -59,7 +64,7 @@ def guiinput():
 def parse_opts(argv):
   global outputfile, inputfile, dry_run, even_odd, target_lang, file_type, fktdeepl_key
 
-  opts, args = getopt.getopt(argv,"dchi:o:l:t:")
+  opts, args = getopt.getopt(argv,"dchi:o:l:t:2:3:")
   for opt, arg in opts:
 
     if opt == '-h':
@@ -85,6 +90,13 @@ def parse_opts(argv):
 
     elif opt == "-c":
       even_odd = True
+
+    elif opt == "-2":
+      input2file = arg
+
+    elif opt == "-3":
+      input3file = arg
+      columns = 3
 
   if file_type not in ("html", "fodt"):
     abort(bad_filetype())
@@ -123,14 +135,14 @@ def table_footer(out):
 # @param origin  origin in left column
 # @param trans   translation in right column
 #
-def table_row(out, org, trans):
+def table_row(out, org, trans, col3text):
   global even_odd
 
   if even_odd is not None:
     even_odd = not even_odd
 
-  if file_type == "html": return table_row_html(out, org, trans, even_odd)
-  if file_type == "fodt": return table_row_fodt(out, org, trans, even_odd)
+  if file_type == "html": return table_row_html(out, org, trans, col3text, even_odd)
+  if file_type == "fodt": return table_row_fodt(out, org, trans, col3text, even_odd)
 
 
 ###############################################################################
@@ -219,6 +231,34 @@ def translate(item):
 
 
 ###############################################################################
+# @brief Gets the text for column 2. Either the translation or a 
+# line from file 2
+# @param item    original string
+# @return translation from deepl or file 2
+#
+def col2text(item):
+  if dry_run:
+    return lorem_ipsum(len(item))
+
+  elif in2file != None:
+    return cleanup(in2file.readline())
+    
+  else:
+    return translator.translate_text(item, target_lang=target_lang).text
+
+
+###############################################################################
+# @brief Gets the text for column 3 from file 3
+# @return empty string or file 3
+#
+def col3text():
+  if in3file != None:
+    return cleanup(in3file.readline())
+    
+  return ""
+
+
+###############################################################################
 # @brief Generates the defualt tile for the navigator
 # @param n   number of title (increasing 1 ..)
 # @return title
@@ -233,11 +273,16 @@ def default_title(n):
 # @param item      Origin which will be translated here on the fly
 #
 def write_items(output, item):
+  global sum_input, sum_output, columns
+  
   logger(str(len(item)) + " => ",  end='', flush=True)
 
-  result = translate(item)
+  result = col2text(item)
 
-  global sum_input, sum_output
+  col3 = None
+  if columns >= 2:
+    col3 = col3text()
+  
   sum_input += len(item)
   sum_output += len(result)
 
@@ -247,7 +292,7 @@ def write_items(output, item):
   else:
     logger(len(result))
 
-  table_row(output, item, result)
+  table_row(output, item, result, col3)
 
 
 #
@@ -265,7 +310,13 @@ if len(sys.argv) > 1:
 else:  
   guiinput()
 
-with io.open(outputfile, 'w', encoding='utf8') as output:
+if len(input2file) != 0:
+  in2file = open(input2file, 'r', encoding='utf8')
+  
+if len(input3file) != 0:
+  in3file = open(input3file, 'r', encoding='utf8')
+  
+with open(outputfile, 'w', encoding='utf8') as output:
   auth_key = deepl_key()
   translator = deepl.Translator(auth_key)
 

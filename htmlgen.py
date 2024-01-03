@@ -75,11 +75,12 @@ def table_footer_html(out):
 
 ###############################################################################
 # @brief Writes table row  with columns for origin and translation in HTML
-# @param out     outputfile
-# @param origin  origin in left column
-# @param trans   translation in right column
+# @param out       outputfile
+# @param origin    origin in left column
+# @param col3text  optional text for third column
+# @param trans     translation in right column
 #
-def table_row_html(out, org, trans, even_odd):
+def table_row_html(out, org, trans, col3text, even_odd):
   if even_odd is None:
     bg = 'none'
 

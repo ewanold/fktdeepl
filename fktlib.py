@@ -28,7 +28,7 @@ blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facil
 ipsum dolor sit amet.
 """
 
-  li = ""
+  li = lorem
   while n > len(li):
     li += lorem
 
