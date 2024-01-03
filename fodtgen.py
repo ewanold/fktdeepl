@@ -1,8 +1,19 @@
 ﻿cell_counter       = 1
 heading_row_height = ""
+
 column_width       = "9,5cm" 
+table_width        = "19cm" 
 counter_width      = "1cm"
+
 creation_date      = "2023-12-29T15:49:57"
+doc_title          = "Titel"
+frame_style        = "1pt solid #000000"
+
+translators_span   = "2"
+heading_span       = "3"
+
+translators_color  = "#e6b8af"
+heading_color      = "#ff4444"
 
 ###############################################################################
 # @brief Writes header for translation table in fodt
@@ -12,14 +23,18 @@ def table_header_fodt(out):
   out.write("""<?xml version="1.0" encoding="UTF-8"?>
 
 <office:document xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0" xmlns:ooo="http://openoffice.org/2004/office" xmlns:fo="urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:config="urn:oasis:names:tc:opendocument:xmlns:config:1.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:meta="urn:oasis:names:tc:opendocument:xmlns:meta:1.0" xmlns:style="urn:oasis:names:tc:opendocument:xmlns:style:1.0" xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0" xmlns:rpt="http://openoffice.org/2005/report" xmlns:draw="urn:oasis:names:tc:opendocument:xmlns:drawing:1.0" xmlns:dr3d="urn:oasis:names:tc:opendocument:xmlns:dr3d:1.0" xmlns:svg="urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0" xmlns:chart="urn:oasis:names:tc:opendocument:xmlns:chart:1.0" xmlns:table="urn:oasis:names:tc:opendocument:xmlns:table:1.0" xmlns:number="urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0" xmlns:ooow="http://openoffice.org/2004/writer" xmlns:oooc="http://openoffice.org/2004/calc" xmlns:of="urn:oasis:names:tc:opendocument:xmlns:of:1.2" xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:tableooo="http://openoffice.org/2009/table" xmlns:calcext="urn:org:documentfoundation:names:experimental:calc:xmlns:calcext:1.0" xmlns:drawooo="http://openoffice.org/2010/draw" xmlns:loext="urn:org:documentfoundation:names:experimental:office:xmlns:loext:1.0" xmlns:field="urn:openoffice:names:experimental:ooo-ms-interop:xmlns:field:1.0" xmlns:math="http://www.w3.org/1998/Math/MathML" xmlns:form="urn:oasis:names:tc:opendocument:xmlns:form:1.0" xmlns:script="urn:oasis:names:tc:opendocument:xmlns:script:1.0" xmlns:formx="urn:openoffice:names:experimental:ooxml-odf-interop:xmlns:form:1.0" xmlns:dom="http://www.w3.org/2001/xml-events" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:grddl="http://www.w3.org/2003/g/data-view#" xmlns:css3t="http://www.w3.org/TR/css3-text/" xmlns:officeooo="http://openoffice.org/2009/office" office:version="1.3" office:mimetype="application/vnd.oasis.opendocument.text">
+ 
  <office:meta>
    <meta:creation-date>""" + creation_date + """</meta:creation-date>
    <meta:generator>fktdeepl</meta:generator>
-  </office:meta>
+ </office:meta>
+
  <office:automatic-styles>
   
   <style:style style:name="table_fkt" style:family="table">
-   <style:table-properties style:width="19cm" fo:margin-left="-1cm" fo:margin-top="0cm" fo:margin-bottom="0cm" fo:break-before="auto" fo:break-after="auto" table:align="left" style:writing-mode="lr-tb"/>
+   <style:table-properties style:width='""" + table_width + """' fo:margin-left="-1cm" fo:margin-top="0cm" 
+                           fo:margin-bottom="0cm" fo:break-before="auto" fo:break-after="auto" table:align="left" 
+                           style:writing-mode="lr-tb"/>
   </style:style>
   
   <style:style style:name="table_counter_column" style:family="table-column">
@@ -39,15 +54,18 @@ def table_header_fodt(out):
   </style:style>
   
   <style:style style:name="translators_counter_cell" style:family="table-cell">
-   <style:table-cell-properties style:vertical-align="" fo:background-color="#e6b8af" fo:padding="0.176cm" fo:border="1pt solid #000000" />
+   <style:table-cell-properties style:vertical-align="" fo:background-color='""" + translators_color + """' 
+                                fo:padding="0.176cm" fo:border='""" + frame_style + """' />
   </style:style>
   
   <style:style style:name="translators_left_cell" style:family="table-cell">
-   <style:table-cell-properties style:vertical-align="" fo:background-color="#e6b8af" fo:padding="0.176cm" fo:border="1pt solid #000000" />
+   <style:table-cell-properties style:vertical-align="" fo:background-color='""" + translators_color + """' 
+                                fo:padding="0.176cm" fo:border='""" + frame_style + """' />
   </style:style>
   
   <style:style style:name="translators_right_cell" style:family="table-cell">
-   <style:table-cell-properties style:vertical-align="" fo:background-color="#e6b8af" fo:padding="0.176cm" fo:border="1pt solid #000000" />
+   <style:table-cell-properties style:vertical-align="" fo:background-color='""" + translators_color + """' 
+                                fo:padding="0.176cm" fo:border='""" + frame_style + """' />
   </style:style>
   
   <style:style style:name="heading_row" style:family="table-row">
@@ -55,7 +73,8 @@ def table_header_fodt(out):
   </style:style>
   
   <style:style style:name="heading_cell" style:family="table-cell">
-   <style:table-cell-properties style:vertical-align="" fo:padding="0.176cm" fo:border="1pt solid #000000"/>
+   <style:table-cell-properties style:vertical-align="" fo:background-color='""" + heading_color + """' 
+                                fo:padding="0.176cm" fo:border='""" + frame_style + """'/>
   </style:style>
   
   <style:style style:name="translation_row" style:family="table-row">
@@ -63,15 +82,15 @@ def table_header_fodt(out):
   </style:style>
   
   <style:style style:name="translation_left_cell" style:family="table-cell">
-   <style:table-cell-properties style:vertical-align="" fo:padding="0.176cm" fo:border="1pt solid #000000"/>
+   <style:table-cell-properties style:vertical-align="" fo:padding="0.176cm" fo:border='""" + frame_style + """'/>
   </style:style>
   
   <style:style style:name="translation_counter_cell" style:family="table-cell">
-   <style:table-cell-properties style:vertical-align="" fo:padding="0.176cm" fo:border="1pt solid #000000"/>
+   <style:table-cell-properties style:vertical-align="" fo:padding="0.176cm" fo:border='""" + frame_style + """'/>
   </style:style>
   
   <style:style style:name="translation_right_cell" style:family="table-cell">
-   <style:table-cell-properties style:vertical-align="" fo:padding="0.176cm" fo:border="1pt solid #000000"/>
+   <style:table-cell-properties style:vertical-align="" fo:padding="0.176cm" fo:border='""" + frame_style + """'/>
   </style:style>
   
   <style:style style:name="translation_counter_text" style:family="paragraph" style:parent-style-name="Standard">
@@ -130,7 +149,7 @@ def table_header_fodt(out):
 
  <office:body>
   <office:text>
-   <text:p text:style-name="para_title">Ð¢itel</text:p>
+   <text:p text:style-name="para_title">""" + doc_title + """</text:p>
    <text:p text:style-name="para_empty"/>
    
    <table:table table:name="table_fkt" table:style-name="table_fkt">
@@ -201,7 +220,7 @@ def table_row_fodt(out, org, trans, even_odd):
 def table_translators_fodt(out, title):
   out.write("""
     <table:table-row table:style-name="translators_row">
-     <table:table-cell table:style-name="translators_left_cell" table:number-columns-spanned="2" office:value-type="string">
+     <table:table-cell table:style-name="translators_left_cell" table:number-columns-spanned='""" + translators_span + """' office:value-type="string">
       <text:h text:style-name="heading_translators" text:outline-level="1">{0}</text:h>
      </table:table-cell>
      <table:table-cell table:style-name="translators_right_cell" office:value-type="string">
@@ -221,7 +240,7 @@ def table_translators_fodt(out, title):
 def table_heading_fodt(out, title):
   out.write("""
     <table:table-row table:style-name="heading_row">
-     <table:table-cell table:style-name="heading_cell" table:number-columns-spanned="3" office:value-type="string">
+     <table:table-cell table:style-name="heading_cell" table:number-columns-spanned='""" + heading_span + """' office:value-type="string">
       <text:p text:style-name="heading_text">{0}</text:p>
      </table:table-cell>
      <table:covered-table-cell/>

@@ -1,9 +1,10 @@
-﻿from pathlib  import Path
-from htmlgen  import *
-from fodtgen  import *
+﻿from pathlib import Path
+from htmlgen import *
+from fodtgen import *
 from fkti18n import *
+from fktlib  import *
 
-import deepl, io, getopt, sys, warnings
+import deepl, io, getopt, sys, warnings, os
 import easygui
 
 ###############################################################################
@@ -16,11 +17,12 @@ sum_input      = 0
 sum_output     = 0
 dry_run        = False
 even_odd       = None
+fktdeepl_key   = "" # "f5c84e42-f195-6b60-5f67-e13b97626693:fx"
 
 warnings.simplefilter("ignore")
 
-USAGE   = "fktdeepl -i <input> [-o <output>] [-l <lang>] [-t <type>] [-d] [-c]"
-VERSION = "0.3"
+USAGE   = "fktdeepl -k <key> -i <in> [-o <out>] [-l <lang>] [-t <type>] [-d] [-c] [-2 <in2>] [-3 <in3>]"
+VERSION = "0.4"
 
 #####################################################
 # @brief Shows grafical dialogs to enter needed data
@@ -38,14 +40,14 @@ def guiinput():
     sys.exit(0)
     
   if(len(inputfile)) == 0:
-    print(infile_missing())
-    sys.exit(1)
+    abort(infile_missing())
 
 # more options to input
 
   if(len(outputfile)) == 0:
     if file_type == "html":
       outputfile = str(Path(inputfile).with_suffix(".html"))
+
     elif file_type == "fodt":
       outputfile = str(Path(inputfile).with_suffix(".fodt"))
 
@@ -55,17 +57,19 @@ def guiinput():
 # @param argv   Arguments from command line
 #
 def parse_opts(argv):
-  global outputfile, inputfile, dry_run, even_odd, target_lang, file_type
+  global outputfile, inputfile, dry_run, even_odd, target_lang, file_type, fktdeepl_key
 
   opts, args = getopt.getopt(argv,"dchi:o:l:t:")
   for opt, arg in opts:
 
     if opt == '-h':
-      print (USAGE)
-      sys.exit()
+      abort(USAGE)
 
     elif opt == "-l":
       target_lang = arg
+
+    elif opt == "-k":
+      fktdeepl_key = arg
 
     elif opt == "-t":
       file_type = arg
@@ -83,12 +87,10 @@ def parse_opts(argv):
       even_odd = True
 
   if file_type not in ("html", "fodt"):
-    print(bad_filetype())
-    sys.exit(1)
+    abort(bad_filetype())
 
   if(len(inputfile)) == 0:
-    print(infile_missing())
-    sys.exit(1)
+    abort(infile_missing())
 
   if(len(outputfile)) == 0:
     if file_type == "html":
@@ -174,7 +176,12 @@ def text_linebreak():
 # @return api key
 #
 def deepl_key():
-  return "f5c84e42-f195-6b60-5f67-e13b97626693:fx"
+  global fktdeepl_key
+
+  if len(fktdeepl_key) == 0:
+    fktdeepl_key = os.environ.get('FKTDEEPL_KEY')
+
+  return fktdeepl_key 
 
 
 ###############################################################################
@@ -182,6 +189,11 @@ def deepl_key():
 # @param out     outputfile
 #
 def cleanup(s):
+  BOM_CODEPOINTS = [u'\uFFFE', u'\uFEFF']    # decoded BOMs, strip if in input[0] (py3.3+)
+
+  if s[0:1] in BOM_CODEPOINTS:
+    s = s[1:]
+
   s = s.strip()
 
   while s.find('  ') >= 0:
@@ -194,13 +206,13 @@ def cleanup(s):
 
 
 ###############################################################################
-# @brief Translates the current block or returns origin as a test dummy
+# @brief Translates the current block or returns a test dummy
 # @param item    original string
 # @return translation from deepl
 #
 def translate(item):
   if dry_run:
-    return item
+    return lorem_ipsum(len(item))
 
   else:
     return translator.translate_text(item, target_lang=target_lang).text
@@ -221,7 +233,7 @@ def default_title(n):
 # @param item      Origin which will be translated here on the fly
 #
 def write_items(output, item):
-  print (str(len(item)) + " => ",  end='', flush=True)
+  logger(str(len(item)) + " => ",  end='', flush=True)
 
   result = translate(item)
 
@@ -230,10 +242,10 @@ def write_items(output, item):
   sum_output += len(result)
 
   if dry_run:
-    print ("(" + str(len(result)) + ")")
+    logger("(" + str(len(result)) + ")")
 
   else:
-    print (len(result))
+    logger(len(result))
 
   table_row(output, item, result)
 
@@ -241,8 +253,9 @@ def write_items(output, item):
 #
 #
 #def debugpr(s):
-#  print(str(len(s)) + ' ' + s,  end=">\n", file=debug)
+#  logger(str(len(s)) + ' ' + s,  end=">\n", file=debug)
 
+#debug  = io.open("debugfile.txt", 'w', encoding='utf8')
 
 ###############################################################################
 # Main part
@@ -253,11 +266,10 @@ else:
   guiinput()
 
 with io.open(outputfile, 'w', encoding='utf8') as output:
-  #debug  = io.open("debugfile.txt", 'w', encoding='utf8')
   auth_key = deepl_key()
   translator = deepl.Translator(auth_key)
 
-  print(inputfile + " => " + outputfile)
+  logger(inputfile + " => " + outputfile)
   table_header(output)
 
   with open(inputfile, 'r', encoding='utf8') as infile:
@@ -313,6 +325,6 @@ with io.open(outputfile, 'w', encoding='utf8') as output:
   table_footer(output)
 
   if dry_run:
-    print (str(sum_input) + " => (" + str(sum_output) + ")")
+    logger(str(sum_input) + " => (" + str(sum_output) + ")")
   else:
-    print (str(sum_input) + " => " + str(sum_output))
+    logger(str(sum_input) + " => " + str(sum_output))
