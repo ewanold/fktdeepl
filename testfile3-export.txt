@@ -11,7 +11,11 @@ SK:
 
 1
 ####links####
-Здравствуйте, уважаемые товарищи. Сегодня мы продолжаем наши встречи или, [можно] назвать, курс лекций. После прослушанной вводной лекции по «Концепции общественной безопасности», сегодня у нас первая тема - тема самая важная, на которой всё зиждется, это фундамент «Концепции общественной безопасности». Тема называется «Триединство - Материя, Информация, Мера».
+Здравствуйте, уважаемые товарищи. Сегодня мы продолжаем наши встречи или,
+[можно] назвать, курс лекций. После прослушанной вводной лекции по «Концепции
+общественной безопасности», сегодня у нас первая тема - тема самая важная, на
+которой всё зиждется, это фундамент «Концепции общественной безопасности». Тема
+называется «Триединство - Материя, Информация, Мера».
 ####mitte####
 Hallo, verehrte Genossinnen und Genossen. Heute setzen wir unsere Treffen oder, [oder, wie man es nennen kann, einen Kurs von Vorträgen. Nachdem wir den Einführungsvortrag über das "Konzept des Wir haben heute das erste Thema, das wichtigste Thema, auf dem alles ruht, die Grundlage des Konzepts der öffentlichen Sicherheit. das die Grundlage des Konzepts der öffentlichen Sicherheit ist. Das Thema heißt "Die Dreifaltigkeit von Materie, Information und Maß".
 ####rechts####
@@ -21,7 +25,10 @@ Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod 
 ####links####
 Человек воспринимает окружающий мiр органами своих чувств. На плакате вы видите восприятие человеком окружающего мiра. Если представить всю Вселенную - во селенной все процессы носят колебательный характер: звук – колебание, свет -
 ####mitte####
-Der Mensch nimmt die Welt um ihn herum mit seinen Sinnen wahr. Auf diesem Poster können Sie sehen wie der Mensch die Welt um ihn herum wahrnimmt. Wenn Sie sich das Universum als Ganzes vorstellen. im Universum sind alle Prozesse oszillierend: Schall ist Oszillation, Licht ist Oszillation.
+Der Mensch nimmt die Welt um ihn herum mit seinen Sinnen wahr. Auf diesem Poster
+können Sie sehen wie der Mensch die Welt um ihn herum wahrnimmt. Wenn Sie sich
+das Universum als Ganzes vorstellen. im Universum sind alle Prozesse
+oszillierend: Schall ist Oszillation, Licht ist Oszillation.
 ####rechts####
  Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore 
 ####ende####

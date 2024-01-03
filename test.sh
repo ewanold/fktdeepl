@@ -5,6 +5,6 @@ rem run compile python app
 python fktdeepl.py -i testfile2.txt -c -l DE    -o testfile2-de.html
 python fktdeepl.py -i testfile2.txt -c -l EN-GB -o testfile2-en.html
 
-python fktsplit3.py  testfile3-export.txt   ####links####  ####mitte####  ####rechts####  ####ende####
+python fktsplit3.py  testfile3-export.txt   "####links####"  "####mitte####"  "####rechts####"  "####ende####"
 
-python fktsplit2.py  testfile2-export.txt   ####links####  ####rechts####  ####ende####
+python fktsplit2.py  testfile2-export.txt   "####links####"  "####rechts####"  "####ende####"

@@ -1,5 +1,6 @@
-﻿from pathlib  import Path
+﻿from pathlib import Path
 from fkti18n import *
+from fktlib  import *
 
 import io, getopt, sys, warnings
 
@@ -14,11 +15,10 @@ class Column(Enum):
     RIGHT  = 4
     END    = 5
 
-USAGE = "fktsplit3 input left-tag center-tag right-tag"
+USAGE = "fktsplit3 input left-tag center-tag right-tag end-tag"
 
 if len(sys.argv) < 6:
-  print(USAGE)
-  sys.exit(1)
+  abort(USAGE)
 
 inputfile = sys.argv[1]
 tagleft   = sys.argv[2]
@@ -37,8 +37,8 @@ sumleft   = 0
 sumcenter = 0
 sumright  = 0
 
-print(inputfile + " => " + leftfile + " + " + centerfile + " + " + rightfile)
-print(inputfile + " => " + tagleft + " + " + tagcenter + " + " + tagright + " + " + tagend)
+logger(inputfile + " => " + leftfile + " + " + centerfile + " + " + rightfile)
+logger(inputfile + " => " + tagleft + " + " + tagcenter + " + " + tagright + " + " + tagend)
 
 with open(inputfile, 'r', encoding='utf8') as infile:
   with open(leftfile, 'w', encoding='utf8') as outleft:
@@ -55,8 +55,7 @@ with open(inputfile, 'r', encoding='utf8') as infile:
 
           if item == tagleft:
             if column != Column.NONE and column != Column.END:
-              print(bad_state_for_left(lineno))
-              sys.exit(1)
+              abort(bad_state_for_left(lineno))
 
             column = Column.LEFT
             sumleft += 1
@@ -64,8 +63,7 @@ with open(inputfile, 'r', encoding='utf8') as infile:
 
           elif item == tagcenter:
             if column != Column.LEFT:
-              print(bad_state_for_center(lineno))
-              sys.exit(1)
+              abort(bad_state_for_center(lineno))
 
             column = Column.CENTER
             sumcenter += 1
@@ -73,8 +71,7 @@ with open(inputfile, 'r', encoding='utf8') as infile:
 
           elif item == tagright:
             if column != Column.CENTER:
-              print(bad_state_for_right(lineno))
-              sys.exit(1)
+              abort(bad_state_for_right(lineno))
 
             column = Column.RIGHT
             sumright += 1
@@ -82,32 +79,43 @@ with open(inputfile, 'r', encoding='utf8') as infile:
 
           elif item == tagend:
             if column != Column.RIGHT:
-              print(bad_state_for_end(lineno))
-              sys.exit(1)
+              abort(bad_state_for_end(lineno))
 
             column = Column.END
             skip = True
+            outleft.write("\n-----\n")
+            outcenter.write("\n-----\n")
+            outright.write("\n-----\n")
+            logger(inputfile + " => -----")
 
           ## Write line to correct file
 
           if not skip:
-            if column == Column.END:
-              outleft.write("\n-----\n")
-              outcenter.write("\n-----\n")
-              outright.write("\n-----\n")
-              print(inputfile + " => -----")
-
             if column == Column.LEFT:
               outleft.write(item + " ")
-              print(inputfile + " => LEFT {0} {1}".format(lineno, len(item)))
+              logger(inputfile + " => LEFT {0} {1}".format(lineno, len(item)))
 
             if column == Column.CENTER:
               outcenter.write(item + " ")
-              print(inputfile + " => CENTER {0} {1}".format(lineno, len(item)))
+              logger(inputfile + " => CENTER {0} {1}".format(lineno, len(item)))
 
             if column == Column.RIGHT:
                outright.write(item + " ")
-               print(inputfile + " => RIGHT {0} {1}".format(lineno, len(item)))
+               logger(inputfile + " => RIGHT {0} {1}".format(lineno, len(item)))
+          else:
+            if column == Column.LEFT:
+              outleft.write(item + " ")
+              logger(inputfile + " => left tag {0}".format(lineno))
+
+            if column == Column.CENTER:
+              outcenter.write(item + " ")
+              logger(inputfile + " => center tag {0}".format(lineno))
+
+            if column == Column.RIGHT:
+               outright.write(item + " ")
+               logger(inputfile + " => right tag {0}".format(lineno))
+
+
 
 if sumleft != sumright or sumleft != sumcenter:
-  print(bad_column_sum())
+  abort(bad_column_sum())
