@@ -429,4 +429,4 @@ def text_empty_para_fodt(out):
 # @return  linebreak sequence
 #
 def text_linebreak_fodt():
-  return "\n\n"
+  return "\n<fktdeepl:br />\n"

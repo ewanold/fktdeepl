@@ -2,14 +2,15 @@
 # @brief fktdeepl generates templates for translator teams
 #
 
-from pathlib import Path
-from htmlgen import *
-from fodtgen import *
-from fkti18n import *
-from fktlib  import *
+from datetime import datetime
+from pathlib  import Path
+from htmlgen  import *
+from fodtgen  import *
+from fkti18n  import *
+from fktlib   import *
 
-import deepl, io, getopt, sys, warnings, os
-import easygui
+import io, getopt, sys, warnings, os, time
+import deepl, easygui
 
 ###############################################################################
 
@@ -72,7 +73,7 @@ def parse_opts(argv):
   global outputfile, inputfile, input2file, input3file, dry_run, even_odd
   global target_lang, file_type, fktdeepl_key, columns, doc_title, col2_empty, col3_empty
 
-  opts, args = getopt.getopt(argv,"dchi:o:l:f:t:2:3:")
+  opts, args = getopt.getopt(argv,"dchi:o:l:f:t:2:3:k:")
   for opt, arg in opts:
 
     if opt == '-h':
@@ -231,27 +232,6 @@ def deepl_key():
 
 
 ###############################################################################
-# @brief Cleans the original from spaces, newlines, etc.
-# @param out     outputfile
-#
-def cleanup(s):
-  BOM_CODEPOINTS = [u'\uFFFE', u'\uFEFF']    # decoded BOMs, strip if in input[0] (py3.3+)
-
-  if s[0:1] in BOM_CODEPOINTS:
-    s = s[1:]
-
-  s = s.strip()
-
-  while s.find('  ') >= 0:
-    s = s.replace('  ', ' ')
-
-  while s.find(' \n') >= 0:
-    s = s.replace(' \n', '\n')
-
-  return s
-
-
-###############################################################################
 # @brief Gets the text for column 2. Either the translation or a 
 # line from file 2
 # @param item    original string
@@ -350,14 +330,16 @@ with open(outputfile, 'w', encoding='utf8') as output:
   translator = deepl.Translator(auth_key)
 
   logger(inputfile + " => " + outputfile)
-  table_setup(doc_title, "2024", columns)
+  starttime = time.time()
+  table_setup(doc_title, datetime.now().strftime("%Y-%m-%d %H:%M:%S"), columns)
   table_header(output)
 
   titleno = 1
   items1 = ""
   items2 = ""
   items3 = ""
-
+  cells  = 1
+  
   with open(inputfile, 'r', encoding='utf8') as infile:
 
     newpara = True
@@ -400,7 +382,8 @@ with open(outputfile, 'w', encoding='utf8') as output:
           items1 = ""
           items2 = ""
           items3 = ""
-
+          cells += 1
+          
         else:
           items1 += "\n" + item1
           items2 += "\n" + item2
@@ -427,3 +410,6 @@ with open(outputfile, 'w', encoding='utf8') as output:
     logger(str(sum_input) + " => (" + str(sum_output) + ")")
   else:
     logger(str(sum_input) + " => " + str(sum_output))
+
+  endtime = time.time()
+  logger (text_statistic(cells, endtime - starttime))

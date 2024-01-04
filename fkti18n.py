@@ -72,3 +72,10 @@ def text_section(n):
   if is_locale("DE"): return "Abschnitt {0}".format(n)
   return                     "Section {0}".format(n)
 
+
+def text_statistic(n, tm):
+  sec = int(tm * 10 ) / 10
+  if is_locale("RU"): return "{0} Ячейки таблицы созданы в {1}".format(n, sec)
+  if is_locale("DE"): return "{0} Tabellenzellen erzeugt in {1}s".format(n, sec)
+  return                     "{0} table cells created in {1}s".format(n, sec)
+

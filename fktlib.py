@@ -39,3 +39,27 @@ ipsum dolor sit amet.
   return li[0:n]
 
 
+
+###############################################################################
+# @brief Cleans the original from spaces, newlines, etc.
+# @param out     outputfile
+#
+def cleanup(s):
+  BOM_CODEPOINTS = [u'\uFFFE', u'\uFEFF']    # decoded BOMs, strip if in input[0] (py3.3+)
+
+  if s[0:1] in BOM_CODEPOINTS:
+    s = s[1:]
+
+  s = s.strip()
+
+  while s.find('  ') >= 0:
+    s = s.replace('  ', ' ')
+
+  while s.find(' \n') >= 0:
+    s = s.replace(' \n', '\n')
+
+  s = s.replace("<", "&lt;")
+  s = s.replace("&", "&amp;")
+  
+  return s
+
