@@ -61,6 +61,7 @@ def table_setup_fodt(title, date, cols):
     heading_span           = "4"
     page_width             = "315mm" 
     table_width            = "285mm" 
+
     translation_right_color     = translation_medium_color
     translation_right_color_odd = translation_medium_color_odd
 
@@ -68,7 +69,7 @@ def table_setup_fodt(title, date, cols):
 ###############################################################################
 # @brief Writes header for translation table in fodt
 # @param out    outputfile
-# @param cls    number of columsn 2, 3
+# @param cls    number of columns 2, 3
 #
 def table_header_fodt(out, cols):
   out.write("""<?xml version="1.0" encoding="UTF-8"?>
@@ -107,7 +108,7 @@ def table_header_fodt(out, cols):
                            style:writing-mode="lr-tb"/>
   </style:style>
   
-  <!-- Column definitiontions -->
+  <!-- Column definitions -->
 
   <style:style style:name="table_counter_column" style:family="table-column">
    <style:table-column-properties style:column-width='""" + counter_width + """'/>
@@ -125,7 +126,7 @@ def table_header_fodt(out, cols):
    <style:table-column-properties style:column-width='""" + column_width + """'/>
   </style:style>
   
-  <!-- Translator row definitiontions -->
+  <!-- Translator row definitions -->
 
   <style:style style:name="translators_row" style:family="table-row">
    <style:table-row-properties fo:keep-together="auto"/>
@@ -146,7 +147,7 @@ def table_header_fodt(out, cols):
                                 fo:padding='""" + padding_rtlb + """' fo:border='""" + frame_style + """' />
   </style:style>
   
-  <!-- Heading definitiontions -->
+  <!-- Heading definitions -->
 
   <style:style style:name="heading_row" style:family="table-row">
    <style:table-row-properties style:min-row-height="0.741cm" fo:keep-together="auto"/>
@@ -157,7 +158,7 @@ def table_header_fodt(out, cols):
                                 fo:padding='""" + padding_rtlb + """' fo:border='""" + frame_style + """'/>
   </style:style>
   
-  <!-- Translation row definitiontions -->
+  <!-- Translation row definitions -->
 
   <style:style style:name="translation_row" style:family="table-row">
    <style:table-row-properties fo:keep-together="auto"/>
@@ -235,7 +236,7 @@ def table_header_fodt(out, cols):
                                fo:border="none" fo:keep-with-next="auto"/>
   </style:style>
   
-  <!-- Heading definitiontions -->
+  <!-- Heading definitions -->
 
   <style:style style:name="heading_text" style:family="paragraph" style:parent-style-name="Standard">
    <style:paragraph-properties fo:margin-top="0cm" fo:margin-bottom="0cm" style:contextual-spacing="false" 
@@ -250,7 +251,7 @@ def table_header_fodt(out, cols):
                           style:font-size-complex="18pt" style:font-weight-complex="bold"/>
   </style:style>
 
-  <!-- Other definitiontions -->
+  <!-- Other definitions -->
 
   <style:style style:name="text_regular" style:family="paragraph" style:parent-style-name="Standard">
    <loext:graphic-properties draw:fill="none"/>
@@ -280,7 +281,7 @@ def table_header_fodt(out, cols):
    <style:text-properties fo:font-weight="bold" />
   </style:style>
 
-  <!-- Page definitiontions -->
+  <!-- Page definitions -->
 
   <style:page-layout style:name="page_layout">
    <style:page-layout-properties fo:page-width='""" + page_width + """' fo:page-height='""" + page_height + """' style:num-format="1"

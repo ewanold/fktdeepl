@@ -16,7 +16,7 @@ def table_setup_html(cols, title, date):
 ###############################################################################
 # @brief Writes header for translation table in HTML
 # @param out    outputfile
-# @param cls    number of columsn 2, 3
+# @param cls    number of columns 2, 3
 #
 def table_header_html(out, cols):
   out.write("""

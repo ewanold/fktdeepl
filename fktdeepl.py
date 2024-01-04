@@ -27,6 +27,9 @@ sum_output     = 0
 dry_run        = False
 even_odd       = True
 fktdeepl_key   = "" # "f5c84e42-f195-6b60-5f67-e13b97626693:fx"
+doc_title      = ""
+col2_empty     = False 
+col3_empty     = False
 
 warnings.simplefilter("ignore")
 
@@ -67,9 +70,9 @@ def guiinput():
 #
 def parse_opts(argv):
   global outputfile, inputfile, input2file, input3file, dry_run, even_odd
-  global target_lang, file_type, fktdeepl_key, columns
+  global target_lang, file_type, fktdeepl_key, columns, doc_title, col2_empty, col3_empty
 
-  opts, args = getopt.getopt(argv,"dchi:o:l:t:23")
+  opts, args = getopt.getopt(argv,"dchi:o:l:f:t:2:3:")
   for opt, arg in opts:
 
     if opt == '-h':
@@ -81,8 +84,11 @@ def parse_opts(argv):
     elif opt == "-k":
       fktdeepl_key = arg
 
-    elif opt == "-t":
+    elif opt == "-f":
       file_type = arg
+
+    elif opt == "-t":
+      doc_title = arg
 
     elif opt == "-i":
       inputfile = arg
@@ -97,10 +103,19 @@ def parse_opts(argv):
       even_odd = None
 
     elif opt == "-2":
-      input2file = arg
+      if arg != "-":
+        input2file = arg
+
+      else:
+        col2_empty = True   
 
     elif opt == "-3":
-      input3file = arg
+      if arg != "-":
+        input3file = arg
+
+      else:
+        col3_empty = True   
+
       columns = 3
 
   if file_type not in ("html", "fodt"):
@@ -114,6 +129,9 @@ def parse_opts(argv):
       outputfile = str(Path(inputfile).with_suffix(".html"))
     elif file_type == "fodt":
       outputfile = str(Path(inputfile).with_suffix(".fodt"))
+
+  if len(doc_title) == 0:
+    doc_title = inputfile
 
 
 ###############################################################################
@@ -234,19 +252,6 @@ def cleanup(s):
 
 
 ###############################################################################
-# @brief Translates the current block or returns a test dummy
-# @param item    original string
-# @return translation from deepl
-#
-def translate(item):
-  if dry_run:
-    return lorem_ipsum(len(item))
-
-  else:
-    return translator.translate_text(item, target_lang=target_lang).text
-
-
-###############################################################################
 # @brief Gets the text for column 2. Either the translation or a 
 # line from file 2
 # @param item    original string
@@ -256,12 +261,15 @@ def translate(item):
 def col2text(item, items2):
   logger(str(len(item)) + " => ",  end='', flush=True)
 
-  if dry_run:
-    result = lorem_ipsum(len(item))
-
+  if col2_empty:
+    result = ""
+  
   elif in2file != None:
     result = items2
     
+  elif dry_run:
+    result = lorem_ipsum(len(item))
+
   else:
     result = translator.translate_text(item, target_lang=target_lang).text
 
@@ -278,6 +286,9 @@ def col2text(item, items2):
 # @return empty string or file 3
 #
 def col3line():
+  if col3_empty:
+    return ""
+   
   if in3file != None:
     return cleanup(in3file.readline())
     
@@ -288,6 +299,9 @@ def col3line():
 # @return empty string or file 2
 #
 def col2line():
+  if col2_empty:
+    return ""
+   
   if in2file != None:
     return cleanup(in2file.readline())
 
@@ -317,13 +331,6 @@ def write_items(output, item, result, col3text):
   table_row(output, item, result, col3text)
 
 
-#
-#
-#def debugpr(s):
-#  logger(str(len(s)) + ' ' + s,  end=">\n", file=debug)
-
-#debug  = io.open("debugfile.txt", 'w', encoding='utf8')
-
 ###############################################################################
 # Main part
 
@@ -343,11 +350,11 @@ with open(outputfile, 'w', encoding='utf8') as output:
   translator = deepl.Translator(auth_key)
 
   logger(inputfile + " => " + outputfile)
-  table_setup("mein Titel", "2024", columns)
+  table_setup(doc_title, "2024", columns)
   table_header(output)
 
   titleno = 1
-  items = ""
+  items1 = ""
   items2 = ""
   items3 = ""
 
@@ -356,61 +363,61 @@ with open(outputfile, 'w', encoding='utf8') as output:
     newpara = True
 
     for line in infile:
-      item = cleanup(line)
-
-      if(in2file != None):
-        items2 += col2line()
-
-      if columns >= 2:
-        items3 += col3line()
+      item1 = cleanup(line)
+      item2 = col2line()
+      item3 = col3line()
   
-      if len(item) != 0:
+      if len(item1) != 0:
         newpara = True
 
-        if item.startswith('====='):
-          if len(items) > 0:
-            write_items(output, items, col2text(items, items2), items3)
-          items = ""
+        if item1.startswith('====='):
+          if len(items1) > 0:
+            write_items(output, items1, col2text(items1, items2), items3)
+          items1 = ""
           items2 = ""
           items3 = ""
 
-          title = item.lstrip('= ')
+          title = item1.lstrip('= ')
           if len(title) == 0:
             title = default_title(titleno)
 
           table_translators(output, title)
           titleno += 1
 
-        elif item.startswith('#####'):
-          if len(items) > 0:
-            write_items(output, items, col2text(items, items2), items3)
-          items = ""
+        elif item1.startswith('#####'):
+          if len(items1) > 0:
+            write_items(output, items1, col2text(items1, items2), items3)
+          items1 = ""
           items2 = ""
           items3 = ""
 
-          title = item.lstrip('# ')
+          title = item1.lstrip('# ')
           table_heading(output, title)
 
-        elif item.startswith('-----'):
-          if len(items) > 0:
-            write_items(output, items, col2text(items, items2), items3)
-          items = ""
+        elif item1.startswith('-----'):
+          if len(items1) > 0:
+            write_items(output, items1, col2text(items1, items2), items3)
+          items1 = ""
           items2 = ""
           items3 = ""
 
         else:
-          items += "\n" + item
+          items1 += "\n" + item1
+          items2 += "\n" + item2
+          items3 += "\n" + item3
 
           if titleno == 1:
             table_translators(output, default_title(titleno))
             titleno += 1
 
       else:
-          items += text_linebreak()
+          items1 += text_linebreak()
+          items2 += text_linebreak()
+          items3 += text_linebreak()
 
-  if len(items) != 0:
-    write_items(output, items, col2text(items, items2), items3)
-    items = ""
+  if len(items1) != 0:
+    write_items(output, items1, col2text(items1, items2), items3)
+    items1 = ""
     items2 = ""
     items3 = ""
 
