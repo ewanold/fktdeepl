@@ -1,3 +1,7 @@
+###############################################################################
+# @brief Library functions
+#
+
 import io, sys
 
 def logger(s, end='\n', flush=False):

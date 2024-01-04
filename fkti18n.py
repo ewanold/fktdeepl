@@ -1,4 +1,8 @@
-﻿import locale
+﻿###############################################################################
+# @brief Get user text based on locale
+#
+
+import locale
 
 current_locale = ""
 
@@ -62,4 +66,9 @@ def bad_column_sum():
   if is_locale("DE"): return "Ungleiche Anzahl Zellen in den Spalten"
   return                     "Differing numbers of cells in columns"
 
+
+def text_section(n):
+  if is_locale("RU"): return "перевод {0}".format(n)
+  if is_locale("DE"): return "Abschnitt {0}".format(n)
+  return                     "Section {0}".format(n)
 

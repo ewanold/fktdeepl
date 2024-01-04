@@ -1,9 +1,24 @@
-﻿
+﻿###############################################################################
+# @brief Generator for html file
+#
+
+
+###############################################################################
+# @brief Setuo for internal values of table generator in html
+# @param title   document title
+# @param date    creation date
+# @param cols    table columns 2, 3
+#
+def table_setup_html(cols, title, date):
+  return
+
+
 ###############################################################################
 # @brief Writes header for translation table in HTML
 # @param out    outputfile
+# @param cls    number of columsn 2, 3
 #
-def table_header_html(out):
+def table_header_html(out, cols):
   out.write("""
 <html>
 <head>

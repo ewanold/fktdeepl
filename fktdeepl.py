@@ -1,4 +1,8 @@
-﻿from pathlib import Path
+﻿###############################################################################
+# @brief fktdeepl generates templates for translator teams
+#
+
+from pathlib import Path
 from htmlgen import *
 from fodtgen import *
 from fkti18n import *
@@ -21,7 +25,7 @@ file_type      = "fodt"
 sum_input      = 0
 sum_output     = 0
 dry_run        = False
-even_odd       = None
+even_odd       = True
 fktdeepl_key   = "" # "f5c84e42-f195-6b60-5f67-e13b97626693:fx"
 
 warnings.simplefilter("ignore")
@@ -62,9 +66,10 @@ def guiinput():
 # @param argv   Arguments from command line
 #
 def parse_opts(argv):
-  global outputfile, inputfile, dry_run, even_odd, target_lang, file_type, fktdeepl_key
+  global outputfile, inputfile, input2file, input3file, dry_run, even_odd
+  global target_lang, file_type, fktdeepl_key, columns
 
-  opts, args = getopt.getopt(argv,"dchi:o:l:t:2:3:")
+  opts, args = getopt.getopt(argv,"dchi:o:l:t:23")
   for opt, arg in opts:
 
     if opt == '-h':
@@ -89,7 +94,7 @@ def parse_opts(argv):
       dry_run = True
 
     elif opt == "-c":
-      even_odd = True
+      even_odd = None
 
     elif opt == "-2":
       input2file = arg
@@ -112,12 +117,23 @@ def parse_opts(argv):
 
 
 ###############################################################################
+# @brief Setuo for internal values of table generator 
+# @param title   document title
+# @param date    creation date
+# @param cols    table columns 2, 3
+#
+def table_setup(title, date, cols):
+  if file_type == "html":   return table_setup_html(title, date, cols)
+  elif file_type == "fodt": return table_setup_fodt(title, date, cols)
+
+
+###############################################################################
 # @brief Writes header for translation table
 # @param out    outputfile
 #
 def table_header(out):
-  if file_type == "html":   return table_header_html(out)
-  elif file_type == "fodt": return table_header_fodt(out)
+  if file_type == "html":   return table_header_html(out, columns)
+  elif file_type == "fodt": return table_header_fodt(out, columns)
 
 
 ###############################################################################
@@ -234,57 +250,20 @@ def translate(item):
 # @brief Gets the text for column 2. Either the translation or a 
 # line from file 2
 # @param item    original string
+# @param item2   collected lines of optional file 2
 # @return translation from deepl or file 2
 #
-def col2text(item):
-  if dry_run:
-    return lorem_ipsum(len(item))
-
-  elif in2file != None:
-    return cleanup(in2file.readline())
-    
-  else:
-    return translator.translate_text(item, target_lang=target_lang).text
-
-
-###############################################################################
-# @brief Gets the text for column 3 from file 3
-# @return empty string or file 3
-#
-def col3text():
-  if in3file != None:
-    return cleanup(in3file.readline())
-    
-  return ""
-
-
-###############################################################################
-# @brief Generates the defualt tile for the navigator
-# @param n   number of title (increasing 1 ..)
-# @return title
-#
-def default_title(n):
-  return "перевод {0}".format(n)
-
-
-###############################################################################
-# @brief Writes the current pair orig/translation to the target file
-# @param output    Target file
-# @param item      Origin which will be translated here on the fly
-#
-def write_items(output, item):
-  global sum_input, sum_output, columns
-  
+def col2text(item, items2):
   logger(str(len(item)) + " => ",  end='', flush=True)
 
-  result = col2text(item)
+  if dry_run:
+    result = lorem_ipsum(len(item))
 
-  col3 = None
-  if columns >= 2:
-    col3 = col3text()
-  
-  sum_input += len(item)
-  sum_output += len(result)
+  elif in2file != None:
+    result = items2
+    
+  else:
+    result = translator.translate_text(item, target_lang=target_lang).text
 
   if dry_run:
     logger("(" + str(len(result)) + ")")
@@ -292,7 +271,50 @@ def write_items(output, item):
   else:
     logger(len(result))
 
-  table_row(output, item, result, col3)
+  return result
+
+###############################################################################
+# @brief Gets the text for column 3 from file 3
+# @return empty string or file 3
+#
+def col3line():
+  if in3file != None:
+    return cleanup(in3file.readline())
+    
+  return ""
+
+###############################################################################
+# @brief Gets the text for column 2 from file 2
+# @return empty string or file 2
+#
+def col2line():
+  if in2file != None:
+    return cleanup(in2file.readline())
+
+  return ""
+    
+
+###############################################################################
+# @brief Generates the defualt tile for the navigator
+# @param n   number of title (increasing 1 ..)
+# @return title
+#
+def default_title(n):
+  return text_section(n)
+
+
+###############################################################################
+# @brief Writes the current pair orig/translation to the target file
+# @param output    Target file
+# @param item      Origin which will be translated here on the fly
+#
+def write_items(output, item, result, col3text):
+  global sum_input, sum_output, columns
+  
+  sum_input += len(item)
+  sum_output += len(result)
+
+  table_row(output, item, result, col3text)
 
 
 #
@@ -321,24 +343,36 @@ with open(outputfile, 'w', encoding='utf8') as output:
   translator = deepl.Translator(auth_key)
 
   logger(inputfile + " => " + outputfile)
+  table_setup("mein Titel", "2024", columns)
   table_header(output)
 
+  titleno = 1
+  items = ""
+  items2 = ""
+  items3 = ""
+
   with open(inputfile, 'r', encoding='utf8') as infile:
-    titleno = 1
-    items = ""
 
     newpara = True
-    
+
     for line in infile:
       item = cleanup(line)
 
+      if(in2file != None):
+        items2 += col2line()
+
+      if columns >= 2:
+        items3 += col3line()
+  
       if len(item) != 0:
         newpara = True
 
         if item.startswith('====='):
           if len(items) > 0:
-            write_items(output, items)
+            write_items(output, items, col2text(items, items2), items3)
           items = ""
+          items2 = ""
+          items3 = ""
 
           title = item.lstrip('= ')
           if len(title) == 0:
@@ -349,16 +383,20 @@ with open(outputfile, 'w', encoding='utf8') as output:
 
         elif item.startswith('#####'):
           if len(items) > 0:
-            write_items(output, items)
+            write_items(output, items, col2text(items, items2), items3)
           items = ""
+          items2 = ""
+          items3 = ""
 
           title = item.lstrip('# ')
           table_heading(output, title)
 
         elif item.startswith('-----'):
           if len(items) > 0:
-            write_items(output, items)
+            write_items(output, items, col2text(items, items2), items3)
           items = ""
+          items2 = ""
+          items3 = ""
 
         else:
           items += "\n" + item
@@ -371,7 +409,10 @@ with open(outputfile, 'w', encoding='utf8') as output:
           items += text_linebreak()
 
   if len(items) != 0:
-    write_items(output, items)
+    write_items(output, items, col2text(items, items2), items3)
+    items = ""
+    items2 = ""
+    items3 = ""
 
   table_footer(output)
 

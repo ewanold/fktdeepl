@@ -1,4 +1,8 @@
-﻿from pathlib import Path
+﻿###############################################################################
+# @brief Extract 3 columns from exported ODT files to TXT format
+#
+
+from pathlib import Path
 from fkti18n import *
 from fktlib  import *
 
