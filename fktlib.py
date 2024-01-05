@@ -2,10 +2,30 @@
 # @brief Library functions
 #
 
-import io, sys
+import sys, locale
+
+current_locale  = ""
+quiet_mode      = True
+
+def set_verbose():
+  global quiet_mode
+  quiet_mode = False
+
+
+def is_locale(s):
+  return current_locale.find(s) >= 0
+
+
+def setup_locale(): 
+  #current_locale, cp = locale.getlocale(locale.LC_CTYPE)
+  cl, cp = locale.getdefaultlocale()
+  current_locale = cl
+  logger("Locale: " + current_locale)
+
 
 def logger(s, end='\n', flush=False):
-  print(s, end=end, flush=flush)
+  if not quiet_mode:
+    print(s, end=end, flush=flush)
 
 
 def abort(s):
@@ -63,3 +83,9 @@ def cleanup(s):
   
   return s
 
+
+def write_tag_rest(out, item, tag):
+  s = item.replace(tag, " ").strip()
+  print(item + " =>" + s)
+  if len(s) > 0:
+    out.write(s)

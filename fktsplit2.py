@@ -20,6 +20,10 @@ class Column(Enum):
 
 USAGE = "fktsplit2 input left-tag center-tag right-tag"
 
+#set_verbose()
+
+setup_locale()
+
 if len(sys.argv) < 5:
   abort(USAGE)
 
@@ -51,32 +55,34 @@ with open(inputfile, 'r', encoding='utf8') as infile:
 
         skip = False
 
-        if item == tagleft:
+        if item.find(tagleft) >= 0:
           if column != Column.NONE and column != Column.END:
             abort(bad_state_for_left(lineno))
 
           column = Column.LEFT
           sumleft += 1
+          # write_tag_rest(outxxx, item, tagend)
           skip = True
 
-        elif item == tagright:
+        elif item.find(tagright) >= 0:
           if column != Column.LEFT:
             abort(bad_state_for_right(lineno))
 
           column = Column.RIGHT
           sumright += 1
+          write_tag_rest(outleft, item, tagright)
           skip = True
 
-        elif item == tagend:
+        elif item.find(tagend) >= 0:
           if column != Column.RIGHT:
             abort(bad_state_for_end(lineno))
 
           column = Column.END
+          write_tag_rest(outright, item, tagend)
           skip = True
           outleft.write("\n-----\n")
           outright.write("\n-----\n")
           logger(inputfile + " => -----")
-
 
         ## Write line to correct file
 

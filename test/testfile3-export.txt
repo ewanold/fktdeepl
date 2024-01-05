@@ -15,12 +15,18 @@ SK:
 [можно] назвать, курс лекций. После прослушанной вводной лекции по «Концепции
 общественной безопасности», сегодня у нас первая тема - тема самая важная, на
 которой всё зиждется, это фундамент «Концепции общественной безопасности». Тема
-называется «Триединство - Материя, Информация, Мера».
-####mitte####
-Hallo, verehrte Genossinnen und Genossen. Heute setzen wir unsere Treffen oder, [oder, wie man es nennen kann, einen Kurs von Vorträgen. Nachdem wir den Einführungsvortrag über das "Konzept des Wir haben heute das erste Thema, das wichtigste Thema, auf dem alles ruht, die Grundlage des Konzepts der öffentlichen Sicherheit. das die Grundlage des Konzepts der öffentlichen Sicherheit ist. Das Thema heißt "Die Dreifaltigkeit von Materie, Information und Maß".
-####rechts####
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est
-####ende####
+называется «Триединство - Материя, Информация, Мера».####mitte####
+Hallo, verehrte Genossinnen und Genossen. Heute setzen wir unsere Treffen oder,
+[oder, wie man es nennen kann, einen Kurs von Vorträgen. Nachdem wir den
+Einführungsvortrag über das "Konzept des Wir haben heute das erste Thema, das
+wichtigste Thema, auf dem alles ruht, die Grundlage des Konzepts der
+öffentlichen Sicherheit. das die Grundlage des Konzepts der öffentlichen
+Sicherheit ist. Das Thema heißt "Die Dreifaltigkeit von Materie, Information und
+Maß".####rechts####
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
+tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At
+vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
+no sea takimata sanctus est####ende####
 2
 ####links####
 Человек воспринимает окружающий мiр органами своих чувств. На плакате вы видите восприятие человеком окружающего мiра. Если представить всю Вселенную - во селенной все процессы носят колебательный характер: звук – колебание, свет -

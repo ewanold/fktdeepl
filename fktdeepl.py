@@ -316,8 +316,13 @@ def write_items(output, item, result, col3text):
 ###############################################################################
 # Main part
 
+#set_verbose()
+
+setup_locale()
+
 if len(sys.argv) > 1:
   parse_opts(sys.argv[1:])
+
 else:  
   guiinput()
 

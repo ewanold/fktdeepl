@@ -21,6 +21,10 @@ class Column(Enum):
 
 USAGE = "fktsplit3 input left-tag center-tag right-tag end-tag"
 
+#set_verbose()
+
+setup_locale()
+
 if len(sys.argv) < 6:
   abort(USAGE)
 
@@ -57,35 +61,39 @@ with open(inputfile, 'r', encoding='utf8') as infile:
 
           skip = False
 
-          if item == tagleft:
+          if item.find(tagleft) >= 0:
             if column != Column.NONE and column != Column.END:
               abort(bad_state_for_left(lineno))
 
             column = Column.LEFT
             sumleft += 1
+            # write_tag_rest(outxxxx, item, tagleft)
             skip = True
 
-          elif item == tagcenter:
+          elif item.find(tagcenter) >= 0:
             if column != Column.LEFT:
               abort(bad_state_for_center(lineno))
 
             column = Column.CENTER
             sumcenter += 1
+            write_tag_rest(outleft, item, tagcenter)
             skip = True
 
-          elif item == tagright:
+          elif item.find(tagright) >= 0:
             if column != Column.CENTER:
               abort(bad_state_for_right(lineno))
 
             column = Column.RIGHT
             sumright += 1
+            write_tag_rest(outcenter, item, tagright)
             skip = True
 
-          elif item == tagend:
+          elif item.find(tagend) >= 0:
             if column != Column.RIGHT:
               abort(bad_state_for_end(lineno))
 
             column = Column.END
+            write_tag_rest(outright, item, tagend)
             skip = True
             outleft.write("\n-----\n")
             outcenter.write("\n-----\n")
@@ -106,17 +114,18 @@ with open(inputfile, 'r', encoding='utf8') as infile:
             if column == Column.RIGHT:
                outright.write(item + " ")
                logger(inputfile + " => RIGHT {0} {1}".format(lineno, len(item)))
+
           else:
             if column == Column.LEFT:
-              outleft.write(item + " ")
+              #outleft.write(item + " ")
               logger(inputfile + " => left tag {0}".format(lineno))
 
             if column == Column.CENTER:
-              outcenter.write(item + " ")
+              #outcenter.write(item + " ")
               logger(inputfile + " => center tag {0}".format(lineno))
 
             if column == Column.RIGHT:
-               outright.write(item + " ")
+               #outright.write(item + " ")
                logger(inputfile + " => right tag {0}".format(lineno))
 
 
