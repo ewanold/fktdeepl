@@ -2,7 +2,7 @@
 # @brief Library functions
 #
 
-import sys, locale
+import sys, locale, textwrap
 
 current_locale  = ""
 quiet_mode      = True
@@ -31,6 +31,11 @@ def logger(s, end='\n', flush=False):
 def abort(s):
   print(s)
   sys.exit(1)
+
+
+def wrap_text(s):
+  return "\n".join(textwrap.wrap(s, width=60, drop_whitespace=False))
+# return s
 
 
 def lorem_ipsum(n):
@@ -87,4 +92,4 @@ def cleanup(s):
 def write_tag_rest(out, item, tag):
   s = item.replace(tag, " ").strip()
   if len(s) > 0:
-    out.write(s)
+    out.write(wrap_text(s))

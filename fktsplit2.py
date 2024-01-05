@@ -13,14 +13,12 @@ from enum import Enum
 # class syntax
 
 class Column(Enum):
-    NONE  = 1
-    LEFT  = 2
-    RIGHT = 3
-    END   = 4
+  NONE  = 1
+  LEFT  = 2
+  RIGHT = 3
+  END   = 4
 
 USAGE = "fktsplit2 input left-tag center-tag right-tag"
-
-#set_verbose()
 
 setup_locale()
 
@@ -88,11 +86,11 @@ with open(inputfile, 'r', encoding='utf8') as infile:
 
         if not skip:
           if column == Column.LEFT:
-            outleft.write(item + "  ")
+            outleft.write(wrap_text(item + "  "))
             logger(inputfile + " => LEFT {0} {1}".format(lineno, len(item)))
 
           if column == Column.RIGHT:
-            outright.write(item + " ")
+            outright.write(wrap_text(item + " "))
             logger(inputfile + " => RIGHT {0} {1}".format(lineno, len(item)))
 
         else:

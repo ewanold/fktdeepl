@@ -1,9 +1,8 @@
 How to setup a working environment
 
-Install standard Python 3.x 
+Install standard Python 3.x (3.12 was used) 
 
-pip install pyinstaller 
 pip install --upgrade deepl
-pip install auto-py-to-exe
+pip install auto-py-to-exe  /  pyinstaller 
 pip install easygui
 

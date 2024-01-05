@@ -4,7 +4,7 @@
 
 cell_counter                  = 1
 heading_row_height            = ""
-fodt_linebreak                = "<fktdeepl:br />"
+fodt_linebreak                = "<fktdeepl:br/>" # no spaces
 
 column_width                  = "95mm" 
 page_width                    = "210mm" 
@@ -368,7 +368,6 @@ def table_row_fodt(out, org, trans, col3text, even_odd):
     else:
       bg = ''
 
-      
   left_break = """</text:p><text:p text:style-name="translation_left_text">"""
   left_block = org.replace(fodt_linebreak, left_break)
   

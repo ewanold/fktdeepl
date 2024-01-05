@@ -13,15 +13,13 @@ from enum import Enum
 # class syntax
 
 class Column(Enum):
-    NONE   = 1
-    LEFT   = 2
-    CENTER = 3
-    RIGHT  = 4
-    END    = 5
+  NONE   = 1
+  LEFT   = 2
+  CENTER = 3
+  RIGHT  = 4
+  END    = 5
 
 USAGE = "fktsplit3 input left-tag center-tag right-tag end-tag"
-
-#set_verbose()
 
 setup_locale()
 
@@ -104,28 +102,25 @@ with open(inputfile, 'r', encoding='utf8') as infile:
 
           if not skip:
             if column == Column.LEFT:
-              outleft.write(item + " ")
+              outleft.write(wrap_text(item + " "))
               logger(inputfile + " => LEFT {0} {1}".format(lineno, len(item)))
 
             if column == Column.CENTER:
-              outcenter.write(item + " ")
+              outcenter.write(wrap_text(item + " "))
               logger(inputfile + " => CENTER {0} {1}".format(lineno, len(item)))
 
             if column == Column.RIGHT:
-               outright.write(item + " ")
+               outright.write(wrap_text(item + " "))
                logger(inputfile + " => RIGHT {0} {1}".format(lineno, len(item)))
 
           else:
             if column == Column.LEFT:
-              #outleft.write(item + " ")
               logger(inputfile + " => left tag {0}".format(lineno))
 
             if column == Column.CENTER:
-              #outcenter.write(item + " ")
               logger(inputfile + " => center tag {0}".format(lineno))
 
             if column == Column.RIGHT:
-               #outright.write(item + " ")
                logger(inputfile + " => right tag {0}".format(lineno))
 
 

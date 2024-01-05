@@ -74,7 +74,7 @@ def parse_opts(argv):
   global outputfile, inputfile, input2file, input3file, dry_run, even_odd
   global target_lang, file_type, fktdeepl_key, columns, doc_title, col2_empty, col3_empty
 
-  opts, args = getopt.getopt(argv,"dchi:o:l:f:t:2:3:k:")
+  opts, args = getopt.getopt(argv,"vdchi:o:l:f:t:2:3:k:")
   for opt, arg in opts:
 
     if opt == '-h':
@@ -82,6 +82,9 @@ def parse_opts(argv):
 
     elif opt == "-l":
       target_lang = arg
+
+    elif opt == "-v":
+      set_verbose()
 
     elif opt == "-k":
       fktdeepl_key = arg
@@ -253,9 +256,9 @@ def col2text(item, items2):
     result = lorem_ipsum(len(item))
 
   else:
-    result = deepl_translator.translate_text(item, target_lang=target_lang).text
+      result = deepl_translator.translate_text(item, target_lang=target_lang).text
 
-  if dry_run:
+  if dry_run or col2_empty:
     logger("(" + str(len(result)) + ")")
 
   else:
@@ -310,7 +313,7 @@ def write_items(output, item, result, col3text):
   sum_input += len(item)
   sum_output += len(result)
 
-  table_row(output, item, result, col3text)
+  table_row(output, wrap_text(item), wrap_text(result), wrap_text(col3text))
 
 
 ###############################################################################
@@ -334,7 +337,7 @@ if len(input3file) != 0:
   
 with open(outputfile, 'w', encoding='utf8') as output:
   auth_key = deepl_key()
-  if not dry_run:
+  if not dry_run and not col2_empty:
     if not auth_key or len(auth_key) == 0:
       abort(no_authkey())
     deepl_translator = deepl.Translator(auth_key)
@@ -348,7 +351,7 @@ with open(outputfile, 'w', encoding='utf8') as output:
   items1 = ""
   items2 = ""
   items3 = ""
-  cells  = 1
+  cells  = 0
   
   with open(inputfile, 'r', encoding='utf8') as infile:
 
@@ -368,6 +371,7 @@ with open(outputfile, 'w', encoding='utf8') as output:
           items1 = ""
           items2 = ""
           items3 = ""
+          cells += 1
 
           title = item1.lstrip('= ')
           if len(title) == 0:
@@ -382,6 +386,7 @@ with open(outputfile, 'w', encoding='utf8') as output:
           items1 = ""
           items2 = ""
           items3 = ""
+          cells += 1
 
           title = item1.lstrip('# ')
           table_heading(output, title)
@@ -416,7 +421,7 @@ with open(outputfile, 'w', encoding='utf8') as output:
 
   table_footer(output)
 
-  if dry_run:
+  if dry_run or col2_empty:
     logger(str(sum_input) + " => (" + str(sum_output) + ")")
   else:
     logger(str(sum_input) + " => " + str(sum_output))
