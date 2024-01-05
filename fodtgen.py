@@ -412,7 +412,6 @@ def table_row_fodt(out, org, trans, col3text, even_odd):
 # @param title   title for document navigator
 #
 def table_translators_fodt(out, title):
-  print (title)
   out.write("""
     <table:table-row table:style-name="translators_row">
      <table:table-cell table:style-name="translators_left_cell" table:number-columns-spanned='""" + translators_span_left + """'>

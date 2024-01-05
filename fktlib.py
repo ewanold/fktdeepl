@@ -86,6 +86,5 @@ def cleanup(s):
 
 def write_tag_rest(out, item, tag):
   s = item.replace(tag, " ").strip()
-  print(item + " =>" + s)
   if len(s) > 0:
     out.write(s)
