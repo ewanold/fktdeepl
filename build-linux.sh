@@ -1,3 +1,5 @@
+#!/bin/sh
+
 ~/.local/bin/pyinstaller --onefile fktdeepl.py
 ~/.local/bin/pyinstaller --onefile fktsplit2.py
 ~/.local/bin/pyinstaller --onefile fktsplit3.py

@@ -79,3 +79,7 @@ def text_statistic(n, tm):
   if is_locale("DE"): return "{0} Tabellenzellen erzeugt in {1}s".format(n, sec)
   return                     "{0} table cells created in {1}s".format(n, sec)
 
+def no_authkey():
+  if is_locale("RU"): return "Не передан ключ API для deepl"
+  if is_locale("DE"): return "Kein API-Key für deepl übergeben"
+  return                     "No API key for deepl given"

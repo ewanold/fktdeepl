@@ -2,6 +2,7 @@
 # @brief Generator for html file
 #
 
+html_linebreak                = "<br /><br />"
 
 ###############################################################################
 # @brief Setuo for internal values of table generator in html
@@ -156,4 +157,4 @@ def text_empty_para_html(out):
 # @return  linebreak sequence
 #
 def text_linebreak_html():
-  return "\n<br/><br/>\n"
+  return "\n" + html_linebreak + html_linebreak + "\n"

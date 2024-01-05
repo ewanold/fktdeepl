@@ -9,33 +9,34 @@ from fodtgen  import *
 from fkti18n  import *
 from fktlib   import *
 
-import io, getopt, sys, warnings, os, time
+import getopt, sys, warnings, os, time
 import deepl, easygui
 
 ###############################################################################
 
-inputfile      = ""
-outputfile     = ""
-input2file     = ""
-input3file     = ""
-in2file        = None
-in3file        = None
-columns        = 2
-target_lang    = "DE"
-file_type      = "fodt"
-sum_input      = 0
-sum_output     = 0
-dry_run        = False
-even_odd       = True
-fktdeepl_key   = "" # "f5c84e42-f195-6b60-5f67-e13b97626693:fx"
-doc_title      = ""
-col2_empty     = False 
-col3_empty     = False
+inputfile        = ""
+outputfile       = ""
+input2file       = ""
+input3file       = ""
+in2file          = None
+in3file          = None
+columns          = 2
+target_lang      = "DE"
+file_type        = "fodt"
+sum_input        = 0
+sum_output       = 0
+dry_run          = False
+even_odd         = True
+fktdeepl_key     = "" # "f5c84e42-f195-6b60-5f67-e13b97626693:fx"
+doc_title        = ""
+col2_empty       = False 
+col3_empty       = False
+deepl_translator = None
 
 warnings.simplefilter("ignore")
 
 USAGE   = "fktdeepl -k <key> -i <in> [-o <out>] [-l <lang>] [-t <type>] [-d] [-c] [-2 <in2>] [-3 <in3>]"
-VERSION = "0.4"
+VERSION = "0.5"
 
 #####################################################
 # @brief Shows grafical dialogs to enter needed data
@@ -128,6 +129,7 @@ def parse_opts(argv):
   if(len(outputfile)) == 0:
     if file_type == "html":
       outputfile = str(Path(inputfile).with_suffix(".html"))
+      
     elif file_type == "fodt":
       outputfile = str(Path(inputfile).with_suffix(".fodt"))
 
@@ -142,8 +144,8 @@ def parse_opts(argv):
 # @param cols    table columns 2, 3
 #
 def table_setup(title, date, cols):
-  if file_type == "html":   return table_setup_html(title, date, cols)
-  elif file_type == "fodt": return table_setup_fodt(title, date, cols)
+  if file_type == "html": return table_setup_html(title, date, cols)
+  if file_type == "fodt": return table_setup_fodt(title, date, cols)
 
 
 ###############################################################################
@@ -151,8 +153,8 @@ def table_setup(title, date, cols):
 # @param out    outputfile
 #
 def table_header(out):
-  if file_type == "html":   return table_header_html(out, columns)
-  elif file_type == "fodt": return table_header_fodt(out, columns)
+  if file_type == "html": return table_header_html(out, columns)
+  if file_type == "fodt": return table_header_fodt(out, columns)
 
 
 ###############################################################################
@@ -160,8 +162,8 @@ def table_header(out):
 # @param out    outputfile
 #
 def table_footer(out):
-  if file_type == "html":   return table_footer_html(out)
-  elif file_type == "fodt": return table_footer_fodt(out)
+  if file_type == "html": return table_footer_html(out)
+  if file_type == "fodt": return table_footer_fodt(out)
 
 
 ###############################################################################
@@ -251,7 +253,7 @@ def col2text(item, items2):
     result = lorem_ipsum(len(item))
 
   else:
-    result = translator.translate_text(item, target_lang=target_lang).text
+    result = deepl_translator.translate_text(item, target_lang=target_lang).text
 
   if dry_run:
     logger("(" + str(len(result)) + ")")
@@ -327,11 +329,14 @@ if len(input3file) != 0:
   
 with open(outputfile, 'w', encoding='utf8') as output:
   auth_key = deepl_key()
-  translator = deepl.Translator(auth_key)
+  if not dry_run:
+    if not auth_key or len(auth_key) == 0:
+      abort(no_authkey())
+    deepl_translator = deepl.Translator(auth_key)
 
   logger(inputfile + " => " + outputfile)
   starttime = time.time()
-  table_setup(doc_title, datetime.now().strftime("%Y-%m-%d %H:%M:%S"), columns)
+  table_setup(doc_title, datetime.now().strftime("%Y-%m-%d %H:%M"), columns)
   table_header(output)
 
   titleno = 1
