@@ -99,7 +99,7 @@ with open(inputfile, 'r', encoding='utf8') as infile:
 
           if column == Column.RIGHT:
             logger(inputfile + " => right switch {0}".format(lineno))
-          
+
 
 if sumleft != sumright:
   abort(bad_column_sum())

@@ -2,6 +2,8 @@
 # @brief fktdeepl generates templates for translator teams
 #
 
+import getopt, sys, warnings, os, time
+
 from datetime import datetime
 from pathlib  import Path
 from htmlgen  import *
@@ -9,7 +11,6 @@ from fodtgen  import *
 from fkti18n  import *
 from fktlib   import *
 
-import getopt, sys, warnings, os, time
 import deepl, easygui
 
 ###############################################################################
@@ -29,7 +30,7 @@ dry_run          = False
 even_odd         = True
 fktdeepl_key     = "" # "f5c84e42-f195-6b60-5f67-e13b97626693:fx"
 doc_title        = ""
-col2_empty       = False 
+col2_empty       = False
 col3_empty       = False
 deepl_translator = None
 
@@ -43,7 +44,7 @@ VERSION = "0.5"
 #
 def guiinput():
   global inputfile , outputfile
-  
+
   inputfile = easygui.fileopenbox(msg=enter_inputfile(),
                                   title="fktdeepl",
                                   default='*',
@@ -52,7 +53,7 @@ def guiinput():
 
   if inputfile == None:
     sys.exit(0)
-    
+
   if(len(inputfile)) == 0:
     abort(infile_missing())
 
@@ -65,7 +66,7 @@ def guiinput():
     elif file_type == "fodt":
       outputfile = str(Path(inputfile).with_suffix(".fodt"))
 
-  
+
 ###############################################################################
 # @brief Parses command line arguments and Shows grafical dialogs to enter needed data
 # @param argv   Arguments from command line
@@ -112,14 +113,14 @@ def parse_opts(argv):
         input2file = arg
 
       else:
-        col2_empty = True   
+        col2_empty = True
 
     elif opt == "-3":
       if arg != "-":
         input3file = arg
 
       else:
-        col3_empty = True   
+        col3_empty = True
 
       columns = 3
 
@@ -132,7 +133,7 @@ def parse_opts(argv):
   if(len(outputfile)) == 0:
     if file_type == "html":
       outputfile = str(Path(inputfile).with_suffix(".html"))
-      
+
     elif file_type == "fodt":
       outputfile = str(Path(inputfile).with_suffix(".fodt"))
 
@@ -141,14 +142,14 @@ def parse_opts(argv):
 
 
 ###############################################################################
-# @brief Setuo for internal values of table generator 
+# @brief Setuo for internal values of table generator
 # @param title   document title
 # @param date    creation date
 # @param cols    table columns 2, 3
 #
 def table_setup(title, date, cols):
-  if file_type == "html": return table_setup_html(title, date, cols)
-  if file_type == "fodt": return table_setup_fodt(title, date, cols)
+  if file_type == "html": table_setup_html(title, date, cols)
+  if file_type == "fodt": table_setup_fodt(title, date, cols)
 
 
 ###############################################################################
@@ -156,8 +157,8 @@ def table_setup(title, date, cols):
 # @param out    outputfile
 #
 def table_header(out):
-  if file_type == "html": return table_header_html(out, columns)
-  if file_type == "fodt": return table_header_fodt(out, columns)
+  if file_type == "html": table_header_html(out, columns)
+  if file_type == "fodt": table_header_fodt(out, columns)
 
 
 ###############################################################################
@@ -165,8 +166,8 @@ def table_header(out):
 # @param out    outputfile
 #
 def table_footer(out):
-  if file_type == "html": return table_footer_html(out)
-  if file_type == "fodt": return table_footer_fodt(out)
+  if file_type == "html": table_footer_html(out)
+  if file_type == "fodt": table_footer_fodt(out)
 
 
 ###############################################################################
@@ -233,11 +234,11 @@ def deepl_key():
   if len(fktdeepl_key) == 0:
     fktdeepl_key = os.environ.get('FKTDEEPL_KEY')
 
-  return fktdeepl_key 
+  return fktdeepl_key
 
 
 ###############################################################################
-# @brief Gets the text for column 2. Either the translation or a 
+# @brief Gets the text for column 2. Either the translation or a
 # line from file 2
 # @param item    original string
 # @param item2   collected lines of optional file 2
@@ -248,15 +249,15 @@ def col2text(item, items2):
 
   if col2_empty:
     result = ""
-  
+
   elif in2file != None:
     result = items2
-    
+
   elif dry_run:
     result = lorem_ipsum(len(item))
 
   else:
-      result = deepl_translator.translate_text(item, target_lang=target_lang).text
+    result = deepl_translator.translate_text(item, target_lang=target_lang).text
 
   if dry_run or col2_empty:
     logger("(" + str(len(result)) + ")")
@@ -273,10 +274,10 @@ def col2text(item, items2):
 def col3line():
   if col3_empty:
     return ""
-   
+
   if in3file != None:
     return cleanup(in3file.readline())
-    
+
   return ""
 
 ###############################################################################
@@ -286,12 +287,12 @@ def col3line():
 def col2line():
   if col2_empty:
     return ""
-   
+
   if in2file != None:
     return cleanup(in2file.readline())
 
   return ""
-    
+
 
 ###############################################################################
 # @brief Generates the defualt tile for the navigator
@@ -309,7 +310,7 @@ def default_title(n):
 #
 def write_items(output, item, result, col3text):
   global sum_input, sum_output, columns
-  
+
   sum_input += len(item)
   sum_output += len(result)
 
@@ -326,15 +327,15 @@ setup_locale()
 if len(sys.argv) > 1:
   parse_opts(sys.argv[1:])
 
-else:  
+else:
   guiinput()
 
 if len(input2file) != 0:
   in2file = open(input2file, 'r', encoding='utf8')
-  
+
 if len(input3file) != 0:
   in3file = open(input3file, 'r', encoding='utf8')
-  
+
 with open(outputfile, 'w', encoding='utf8') as output:
   auth_key = deepl_key()
   if not dry_run and not col2_empty:
@@ -352,7 +353,7 @@ with open(outputfile, 'w', encoding='utf8') as output:
   items2 = ""
   items3 = ""
   cells  = 0
-  
+
   with open(inputfile, 'r', encoding='utf8') as infile:
 
     newpara = True
@@ -361,7 +362,7 @@ with open(outputfile, 'w', encoding='utf8') as output:
       item1 = cleanup(line)
       item2 = col2line()
       item3 = col3line()
-  
+
       if len(item1) != 0:
         newpara = True
 
@@ -398,7 +399,7 @@ with open(outputfile, 'w', encoding='utf8') as output:
           items2 = ""
           items3 = ""
           cells += 1
-          
+
         else:
           items1 += "\n" + item1
           items2 += "\n" + item2
@@ -409,9 +410,9 @@ with open(outputfile, 'w', encoding='utf8') as output:
             titleno += 1
 
       else:
-          items1 += text_linebreak()
-          items2 += text_linebreak()
-          items3 += text_linebreak()
+        items1 += text_linebreak()
+        items2 += text_linebreak()
+        items3 += text_linebreak()
 
   if len(items1) != 0:
     write_items(output, items1, col2text(items1, items2), items3)

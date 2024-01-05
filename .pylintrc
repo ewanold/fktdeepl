@@ -3,3 +3,9 @@ disable=
     C0114, # missing-module-docstring
     C0116, # missing function or method docstring
     C0103, # Constant name
+    C0410, # Multiple imports 
+    W0603, # Using the global statement
+    W0401, # Wildcard import
+    C0301, # Line too long
+    C0321, # More than one statement on a single line
+    R0801, # R0801: Similar lines in 2 files
