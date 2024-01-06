@@ -358,6 +358,7 @@ def table_footer_fodt(out):
 def table_row_fodt(out, org, trans, col3text, even_odd):
   global cell_counter
 
+  bg = ''
   if even_odd is None:
     bg = ''
 
@@ -390,7 +391,7 @@ def table_row_fodt(out, org, trans, col3text, even_odd):
      </table:table-cell>
 """.format(bg, cell_counter, bg, left_block, bg, right_block))
 
-  if col3text != None:
+  if col3text is not None:
     col3_break = """</text:p><text:p text:style-name="translation_3rd_text">"""
     col3_block = col3text.replace(fodt_linebreak, col3_break)
     out.write("""

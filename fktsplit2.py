@@ -2,13 +2,12 @@
 # @brief Extract 2 columns from exported ODT files to TXT format
 #
 
+import sys
+
+from enum    import Enum
 from pathlib import Path
 from fkti18n import *
 from fktlib  import *
-
-import io, getopt, sys, warnings
-
-from enum import Enum
 
 # class syntax
 
@@ -54,7 +53,7 @@ with open(inputfile, 'r', encoding='utf8') as infile:
         skip = False
 
         if item.find(tagleft) >= 0:
-          if column != Column.NONE and column != Column.END:
+          if column not in (Column.NONE, Column.END):
             abort(bad_state_for_left(lineno))
 
           column = Column.LEFT

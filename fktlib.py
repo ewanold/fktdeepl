@@ -17,8 +17,7 @@ def is_locale(s):
 
 
 def setup_locale():
-  #current_locale, cp = locale.getlocale(locale.LC_CTYPE)
-  cl, cp = locale.getdefaultlocale()
+  cl, _ = locale.getdefaultlocale()
   current_locale = cl
   logger("Locale: " + current_locale)
 
@@ -35,7 +34,6 @@ def abort(s):
 
 def wrap_text(s):
   return "\n".join(textwrap.wrap(s, width=60, drop_whitespace=False))
-# return s
 
 
 def lorem_ipsum(n):

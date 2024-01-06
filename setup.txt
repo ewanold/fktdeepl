@@ -5,4 +5,4 @@ Install standard Python 3.x (3.12 was used)
 pip install --upgrade deepl
 pip install auto-py-to-exe  /  pyinstaller 
 pip install easygui
-
+pip install pylint

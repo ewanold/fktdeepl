@@ -6,12 +6,13 @@ import getopt, sys, warnings, os, time
 
 from datetime import datetime
 from pathlib  import Path
+
+import deepl, easygui
+
 from htmlgen  import *
 from fodtgen  import *
 from fkti18n  import *
 from fktlib   import *
-
-import deepl, easygui
 
 ###############################################################################
 
@@ -51,7 +52,7 @@ def guiinput():
                                   filetypes=[ ["*.txt", "TXT files"  ], ["*.*", "All files"] ],
                                   multiple=False)
 
-  if inputfile == None:
+  if inputfile is None:
     sys.exit(0)
 
   if(len(inputfile)) == 0:
@@ -75,7 +76,7 @@ def parse_opts(argv):
   global outputfile, inputfile, input2file, input3file, dry_run, even_odd
   global target_lang, file_type, fktdeepl_key, columns, doc_title, col2_empty, col3_empty
 
-  opts, args = getopt.getopt(argv,"vdchi:o:l:f:t:2:3:k:")
+  opts, _ = getopt.getopt(argv,"vdchi:o:l:f:t:2:3:k:")
   for opt, arg in opts:
 
     if opt == '-h':
@@ -182,8 +183,8 @@ def table_row(out, org, trans, col3text):
   if even_odd is not None:
     even_odd = not even_odd
 
-  if file_type == "html": return table_row_html(out, org, trans, col3text, even_odd)
-  if file_type == "fodt": return table_row_fodt(out, org, trans, col3text, even_odd)
+  if file_type == "html": table_row_html(out, org, trans, col3text, even_odd)
+  if file_type == "fodt": table_row_fodt(out, org, trans, col3text, even_odd)
 
 
 ###############################################################################
@@ -192,8 +193,8 @@ def table_row(out, org, trans, col3text):
 # @param title   title for document navigator
 #
 def table_translators(out, title):
-  if file_type == "html": return table_translators_html(out, title)
-  if file_type == "fodt": return table_translators_fodt(out, title)
+  if file_type == "html": table_translators_html(out, title)
+  if file_type == "fodt": table_translators_fodt(out, title)
 
 
 ###############################################################################
@@ -202,8 +203,8 @@ def table_translators(out, title):
 # @param title   title for document navigator
 #
 def table_heading(out, title):
-  if file_type == "html": return table_heading_html(out, title)
-  if file_type == "fodt": return table_heading_fodt(out, title)
+  if file_type == "html": table_heading_html(out, title)
+  if file_type == "fodt": table_heading_fodt(out, title)
 
 
 ###############################################################################
@@ -211,8 +212,8 @@ def table_heading(out, title):
 # @param out     outputfile
 #
 def text_empty_para(out):
-  if file_type == "html": return text_empty_para_html(out)
-  if file_type == "fodt": return text_empty_para_fodt(out)
+  if file_type == "html": text_empty_para_html(out)
+  if file_type == "fodt": text_empty_para_fodt(out)
 
 
 ###############################################################################
@@ -220,8 +221,8 @@ def text_empty_para(out):
 # @return  linebreak sequence
 #
 def text_linebreak():
-  if file_type == "html": return text_linebreak_html()
-  if file_type == "fodt": return text_linebreak_fodt()
+  if file_type == "html": text_linebreak_html()
+  if file_type == "fodt": text_linebreak_fodt()
 
 
 ###############################################################################
@@ -250,7 +251,7 @@ def col2text(item, items2):
   if col2_empty:
     result = ""
 
-  elif in2file != None:
+  elif in2file is not None:
     result = items2
 
   elif dry_run:
@@ -275,7 +276,7 @@ def col3line():
   if col3_empty:
     return ""
 
-  if in3file != None:
+  if in3file is not None:
     return cleanup(in3file.readline())
 
   return ""
@@ -288,7 +289,7 @@ def col2line():
   if col2_empty:
     return ""
 
-  if in2file != None:
+  if in2file is not None:
     return cleanup(in2file.readline())
 
   return ""
@@ -309,7 +310,7 @@ def default_title(n):
 # @param item      Origin which will be translated here on the fly
 #
 def write_items(output, item, result, col3text):
-  global sum_input, sum_output, columns
+  global sum_input, sum_output
 
   sum_input += len(item)
   sum_output += len(result)
@@ -349,10 +350,11 @@ with open(outputfile, 'w', encoding='utf8') as output:
   table_header(output)
 
   titleno = 1
-  items1 = ""
-  items2 = ""
-  items3 = ""
-  cells  = 0
+  title   = ""
+  items1  = ""
+  items2  = ""
+  items3  = ""
+  cells   = 0
 
   with open(inputfile, 'r', encoding='utf8') as infile:
 

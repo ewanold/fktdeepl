@@ -96,7 +96,7 @@ def table_footer_html(out):
 # @param col3text  optional text for third column
 # @param trans     translation in right column
 #
-def table_row_html(out, org, trans, col3text, even_odd):
+def table_row_html(out, org, trans, _, even_odd):
   if even_odd is None:
     bg = 'none'
 
