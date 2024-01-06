@@ -46,7 +46,7 @@ Zeichen enthalten:
   Text als Überschrift für die folgenden Zeilen.
 - 5 Gleich ==== [text]  
   Erzeugen eine farbige mehrspaltige Unterteilung zum Eintragen
-  der Namen aller beteiligten. Der optinal dahinter stehende Text
+  der Namen aller beteiligten Personen. Der optional dahinter stehende Text
   wird als Titel und erscheint später im Navigationsbereich.
 
 Im einfachsten Fall erzeugt man dann mit folgendem Aufruf eine mit Deepl übersetzte FODT-Datei nach Deutsch:
