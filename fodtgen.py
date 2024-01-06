@@ -416,7 +416,7 @@ def table_translators_fodt(out, title):
   out.write("""
     <table:table-row table:style-name="translators_row">
      <table:table-cell table:style-name="translators_left_cell" table:number-columns-spanned='""" + translators_span_left + """'>
-      <text:h text:style-name="heading_translators" text:outline-level="1">""" + title + """</text:h>
+      <text:h text:style-name="heading_translators" text:outline-level="1">☼ """ + title + """</text:h>
      </table:table-cell>
      <table:table-cell table:style-name="translators_right_cell" table:number-columns-spanned='""" + translators_span_right + """'>
       <text:p text:style-name="translators_right_text">EK:</text:p>
@@ -435,7 +435,7 @@ def table_heading_fodt(out, title):
   out.write("""
     <table:table-row table:style-name="heading_row">
      <table:table-cell table:style-name="heading_cell" table:number-columns-spanned='""" + heading_span + """'>
-      <text:h text:style-name="heading_text">{0}</text:h>
+      <text:h text:style-name="heading_text">☼ {0}</text:h>
      </table:table-cell>
      <table:covered-table-cell/>
     </table:table-row>
