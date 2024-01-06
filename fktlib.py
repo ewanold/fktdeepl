@@ -17,6 +17,8 @@ def is_locale(s):
 
 
 def setup_locale():
+  global current_locale
+
   cl, _ = locale.getdefaultlocale()
   current_locale = cl
   logger("Locale: " + current_locale)

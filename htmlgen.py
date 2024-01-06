@@ -10,7 +10,7 @@ html_linebreak                = "<br /><br />"
 # @param date    creation date
 # @param cols    table columns 2, 3
 #
-def table_setup_html(cols, title, date):
+def table_setup_html(title, date, cols):
   return
 
 

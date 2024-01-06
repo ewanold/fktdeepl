@@ -223,6 +223,7 @@ def text_empty_para(out):
 def text_linebreak():
   if file_type == "html": return text_linebreak_html()
   if file_type == "fodt": return text_linebreak_fodt()
+  return ""                
 
 
 ###############################################################################
@@ -325,7 +326,13 @@ def write_items(output, item, result, col3text):
 
 setup_locale()
 
-if len(sys.argv) > 1:
+if len(sys.argv) == 2:
+  inputfile = sys.argv[1]
+  outputfile = str(Path(inputfile).with_suffix(".fodt"))
+  target_lang = "DE"
+  file_type = "fodt"
+
+elif len(sys.argv) > 1:
   parse_opts(sys.argv[1:])
 
 else:

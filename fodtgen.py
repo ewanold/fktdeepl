@@ -255,14 +255,15 @@ def table_header_fodt(out, cols):
 
   <!-- Heading definitions -->
 
-  <style:style style:name="heading_text" style:family="paragraph" style:parent-style-name="Standard">
+  <style:style style:name="heading_text" style:display-name="Heading 1" style:family="paragraph" style:parent-style-name="Heading"
+               style:default-outline-level="1" style:class="text">
    <style:paragraph-properties fo:margin-top="0cm" fo:margin-bottom="0cm" style:contextual-spacing="false"
                                fo:line-height="115%" fo:text-align="center" style:justify-single-word="false"/>
    <style:text-properties fo:font-size="14pt" fo:font-weight="bold" style:font-size-complex="14pt"/>
   </style:style>
 
   <style:style style:name="heading_translators" style:display-name="Heading 1" style:family="paragraph" style:parent-style-name="Heading"
-               style:next-style-name="Text_20_body" style:default-outline-level="1" style:class="text">
+               style:default-outline-level="1" style:class="text">
    <style:paragraph-properties fo:margin-top="0.4cm" fo:margin-bottom="0.2cm" style:contextual-spacing="false"/>
    <style:text-properties fo:font-size="18pt" fo:font-weight="bold"
                           style:font-size-complex="18pt" style:font-weight-complex="bold"/>
@@ -434,7 +435,7 @@ def table_heading_fodt(out, title):
   out.write("""
     <table:table-row table:style-name="heading_row">
      <table:table-cell table:style-name="heading_cell" table:number-columns-spanned='""" + heading_span + """'>
-      <text:p text:style-name="heading_text">{0}</text:p>
+      <text:h text:style-name="heading_text">{0}</text:h>
      </table:table-cell>
      <table:covered-table-cell/>
     </table:table-row>
