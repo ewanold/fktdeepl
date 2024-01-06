@@ -217,12 +217,12 @@ def text_empty_para(out):
 
 
 ###############################################################################
-# @brief returns linebreak
+# @brief returns linebreak sequence
 # @return  linebreak sequence
 #
 def text_linebreak():
-  if file_type == "html": text_linebreak_html()
-  if file_type == "fodt": text_linebreak_fodt()
+  if file_type == "html": return text_linebreak_html()
+  if file_type == "fodt": return text_linebreak_fodt()
 
 
 ###############################################################################
