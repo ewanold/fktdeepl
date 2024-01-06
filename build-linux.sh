@@ -7,10 +7,10 @@
 
 mkdir -p $HOME/tmp/fktdeepl
 
-cp dist/fktwrap   $HOME/tmp/fktdeepl 
-cp dist/fktdeepl  $HOME/tmp/fktdeepl 
-cp dist/fktsplit2 $HOME/tmp/fktdeepl 
-cp dist/fktsplit3 $HOME/tmp/fktdeepl
-cp test.sh        $HOME/tmp/fktdeepl 
-cp testfile2.txt  $HOME/tmp/fktdeepl 
+cp dist/fktwrap        $HOME/tmp/fktdeepl 
+cp dist/fktdeepl       $HOME/tmp/fktdeepl 
+cp dist/fktsplit2      $HOME/tmp/fktdeepl 
+cp dist/fktsplit3      $HOME/tmp/fktdeepl
+cp test/test.sh        $HOME/tmp/fktdeepl 
+cp test/testfile2.txt  $HOME/tmp/fktdeepl 
 
