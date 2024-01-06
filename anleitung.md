@@ -51,7 +51,7 @@ Zeichen enthalten:
 
 Im einfachsten Fall erzeugt man dann mit folgendem Aufruf eine mit Deepl übersetzte FODT-Datei nach Deutsch:
 
-```
+```bash
 fktdeepl  textfile.txt  -k <key>
 ```
 
@@ -63,7 +63,7 @@ dann mühsam. fktwrap bricht überlange Zeilen auf ca. 80 Zeichen je Zeile durch
 
 Aufruf:
 
-```
+```bash
 fktwrap  txt-file.txt
 ```
 
@@ -87,7 +87,7 @@ in die rechte neue Spalte fügt man z.B. '####ende####' ein.
 
 Das aufbereitete Dokument exportiert man als TXT-Datei und ruft folgendes Kommando auf:
 
-```
+```bash
 fktsplit2  file.txt   "####links####"  "####rechts####"  "####ende####"
 ```
 
@@ -99,6 +99,6 @@ zusätzliche Spalten für Übersetzungsreferenzen verwendet wird.
 Man verfährt wie bei fktsplit2, fügt aber eine weitere Hilfsspalte ein und füllt diese
 mit einer weiteren eindeutigen Markierung.
 
-```
+```bash
 fktsplit3  file.txt   "####links####"  "####mitte####"  "####rechts####"  "####ende####"
 ```
