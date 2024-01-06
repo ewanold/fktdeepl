@@ -14,3 +14,6 @@ disable=
     W0613, # Unused argument
     C0209, # Formatting a regular string which could be an f-string
     W0614, # Unused import(s)
+    R0915, # Too many statements
+    R0914, # Too many local variables
+    R1732, # Consider using 'with' for resource-allocating

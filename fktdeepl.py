@@ -143,7 +143,7 @@ def parse_opts(argv):
 
 
 ###############################################################################
-# @brief Setuo for internal values of table generator
+# @brief Setup for internal values of table generator
 # @param title   document title
 # @param date    creation date
 # @param cols    table columns 2, 3
@@ -223,7 +223,7 @@ def text_empty_para(out):
 def text_linebreak():
   if file_type == "html": return text_linebreak_html()
   if file_type == "fodt": return text_linebreak_fodt()
-  return ""                
+  return ""
 
 
 ###############################################################################
@@ -321,120 +321,123 @@ def write_items(output, item, result, col3text):
 
 ###############################################################################
 # Main part
+#
+def main():
+  global inputfile, doc_title, outputfile, target_lang, file_type
+  global in2file, in3file, deepl_translator
 
-#set_verbose()
+  setup_locale()
 
-setup_locale()
+  if len(sys.argv) == 2:
+    inputfile = sys.argv[1]
+    doc_title = inputfile
+    outputfile = str(Path(inputfile).with_suffix(".fodt"))
+    target_lang = "DE"
+    file_type = "fodt"
 
-if len(sys.argv) == 2:
-  inputfile = sys.argv[1]
-  outputfile = str(Path(inputfile).with_suffix(".fodt"))
-  target_lang = "DE"
-  file_type = "fodt"
+  elif len(sys.argv) > 1:
+    parse_opts(sys.argv[1:])
 
-elif len(sys.argv) > 1:
-  parse_opts(sys.argv[1:])
+  else:
+    guiinput()
 
-else:
-  guiinput()
+  if len(input2file) != 0:
+    in2file = open(input2file, 'r', encoding='utf8')
 
-if len(input2file) != 0:
-  in2file = open(input2file, 'r', encoding='utf8')
+  if len(input3file) != 0:
+    in3file = open(input3file, 'r', encoding='utf8')
 
-if len(input3file) != 0:
-  in3file = open(input3file, 'r', encoding='utf8')
+  with open(outputfile, 'w', encoding='utf8') as output:
+    auth_key = deepl_key()
+    if not dry_run and not col2_empty:
+      if not auth_key or len(auth_key) == 0:
+        abort(no_authkey())
+      deepl_translator = deepl.Translator(auth_key)
 
-with open(outputfile, 'w', encoding='utf8') as output:
-  auth_key = deepl_key()
-  if not dry_run and not col2_empty:
-    if not auth_key or len(auth_key) == 0:
-      abort(no_authkey())
-    deepl_translator = deepl.Translator(auth_key)
+    logger(inputfile + " => " + outputfile)
+    starttime = time.time()
+    table_setup(doc_title, datetime.now().strftime("%Y-%m-%d %H:%M"), columns)
+    table_header(output)
 
-  logger(inputfile + " => " + outputfile)
-  starttime = time.time()
-  table_setup(doc_title, datetime.now().strftime("%Y-%m-%d %H:%M"), columns)
-  table_header(output)
+    titleno = 1
+    title   = ""
+    items1  = ""
+    items2  = ""
+    items3  = ""
+    cells   = 0
 
-  titleno = 1
-  title   = ""
-  items1  = ""
-  items2  = ""
-  items3  = ""
-  cells   = 0
+    with open(inputfile, 'r', encoding='utf8') as infile:
 
-  with open(inputfile, 'r', encoding='utf8') as infile:
+      for line in infile:
+        item1 = cleanup(line)
+        item2 = col2line()
+        item3 = col3line()
 
-    newpara = True
+        if len(item1) != 0:
+          if item1.startswith('====='):
+            if len(items1) > 0:
+              write_items(output, items1, col2text(items1, items2), items3)
+            items1 = ""
+            items2 = ""
+            items3 = ""
+            cells += 1
 
-    for line in infile:
-      item1 = cleanup(line)
-      item2 = col2line()
-      item3 = col3line()
+            title = item1.lstrip('= ')
+            if len(title) == 0:
+              title = default_title(titleno)
 
-      if len(item1) != 0:
-        newpara = True
-
-        if item1.startswith('====='):
-          if len(items1) > 0:
-            write_items(output, items1, col2text(items1, items2), items3)
-          items1 = ""
-          items2 = ""
-          items3 = ""
-          cells += 1
-
-          title = item1.lstrip('= ')
-          if len(title) == 0:
-            title = default_title(titleno)
-
-          table_translators(output, title)
-          titleno += 1
-
-        elif item1.startswith('#####'):
-          if len(items1) > 0:
-            write_items(output, items1, col2text(items1, items2), items3)
-          items1 = ""
-          items2 = ""
-          items3 = ""
-          cells += 1
-
-          title = item1.lstrip('# ')
-          table_heading(output, title)
-
-        elif item1.startswith('-----'):
-          if len(items1) > 0:
-            write_items(output, items1, col2text(items1, items2), items3)
-          items1 = ""
-          items2 = ""
-          items3 = ""
-          cells += 1
-
-        else:
-          items1 += "\n" + item1
-          items2 += "\n" + item2
-          items3 += "\n" + item3
-
-          if titleno == 1:
-            table_translators(output, default_title(titleno))
+            table_translators(output, title)
             titleno += 1
 
-      else:
-        items1 += text_linebreak()
-        items2 += text_linebreak()
-        items3 += text_linebreak()
+          elif item1.startswith('#####'):
+            if len(items1) > 0:
+              write_items(output, items1, col2text(items1, items2), items3)
+            items1 = ""
+            items2 = ""
+            items3 = ""
+            cells += 1
 
-  if len(items1) != 0:
-    write_items(output, items1, col2text(items1, items2), items3)
-    items1 = ""
-    items2 = ""
-    items3 = ""
+            title = item1.lstrip('# ')
+            table_heading(output, title)
 
-  table_footer(output)
+          elif item1.startswith('-----'):
+            if len(items1) > 0:
+              write_items(output, items1, col2text(items1, items2), items3)
+            items1 = ""
+            items2 = ""
+            items3 = ""
+            cells += 1
 
-  if dry_run or col2_empty:
-    logger(str(sum_input) + " => (" + str(sum_output) + ")")
-  else:
-    logger(str(sum_input) + " => " + str(sum_output))
+          else:
+            items1 += "\n" + item1
+            items2 += "\n" + item2
+            items3 += "\n" + item3
 
-  endtime = time.time()
-  logger (text_statistic(cells, endtime - starttime))
+            if titleno == 1:
+              table_translators(output, default_title(titleno))
+              titleno += 1
+
+        else:
+          items1 += text_linebreak()
+          items2 += text_linebreak()
+          items3 += text_linebreak()
+
+    if len(items1) != 0:
+      write_items(output, items1, col2text(items1, items2), items3)
+      items1 = ""
+      items2 = ""
+      items3 = ""
+
+    table_footer(output)
+
+    if dry_run or col2_empty:
+      logger(str(sum_input) + " => (" + str(sum_output) + ")")
+    else:
+      logger(str(sum_input) + " => " + str(sum_output))
+
+    endtime = time.time()
+    logger (text_statistic(cells, endtime - starttime))
+
+
+if __name__ == '__main__':
+  main()
